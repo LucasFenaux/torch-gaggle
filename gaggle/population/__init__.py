@@ -1,0 +1,6 @@
+from .individual import Individual
+from gaggle.population.base_individuals.nn_individual import NNIndividual
+from gaggle.population.base_individuals.numpy_individual import NumpyIndividual
+from gaggle.population.base_individuals.rl_individual import RLIndividual
+from .individual_factory import IndividualFactory
+from .population_manager import PopulationManager
