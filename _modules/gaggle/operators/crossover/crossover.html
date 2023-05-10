@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.operators.crossover.crossover &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.operators.crossover.crossover</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.operators.crossover.crossover</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.population.individual</span> <span class="kn">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.ga_args</span> <span class="kn">import</span> <span class="n">GAArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.population.population_manager</span> <span class="kn">import</span> <span class="n">PopulationManager</span>
+
+
+<div class="viewcode-block" id="Crossover"><a class="viewcode-back" href="../../../../gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover">[docs]</a><span class="k">class</span> <span class="nc">Crossover</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; The parent class for any Crossover Operator. </span>
+<span class="sd">    It gives a basic function to crossover a whole population once the function for crossing over a single pair of parents is specified</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mates_per_crossover</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">children_per_crossover</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">:</span> <span class="n">GAArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span> <span class="o">=</span> <span class="n">ga_args</span> <span class="k">if</span> <span class="n">ga_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">GAArgs</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="Crossover.crossover_individual"><a class="viewcode-back" href="../../../../gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover.crossover_individual">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">crossover_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individuals</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Individual</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Individual</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Speficies how to create children from parents</span>
+<span class="sd">        Args:</span>
+<span class="sd">            individuals: a list of parents to crossover (typically 2)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A list of children created from the parents (typically 2)&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Crossover.crossover_pop"><a class="viewcode-back" href="../../../../gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover.crossover_pop">[docs]</a>    <span class="k">def</span> <span class="nf">crossover_pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">PopulationManager</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PopulationManager</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; Calls the crossover indivual operator over the whole popualtion</span>
+<span class="sd">        while maintaining the protected parents</span>
+<span class="sd">        For each pair of parents, crossover is called with probability ga_args.parent_survival_rate</span>
+<span class="sd">        Args:</span>
+<span class="sd">            manager: PopulationManager object holding the current population</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Modified PopulationManager object&quot;&quot;&quot;</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_parents</span><span class="p">()</span>
+        <span class="n">num_parents</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_population</span><span class="p">()</span>
+        <span class="n">freshness</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_freshness</span><span class="p">()</span>
+
+        <span class="n">new_population</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">new_freshness</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">free_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">population_size</span><span class="p">))</span>
+        <span class="n">to_mutate</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># first we get the protected indices and we add them to the list</span>
+        <span class="n">protected_models</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_protected</span><span class="p">()</span>
+
+        <span class="c1"># adding the protected</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">protected_models</span><span class="p">:</span>
+            <span class="n">new_population</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">new_freshness</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">freshness</span><span class="p">[</span><span class="n">p</span><span class="p">]</span>
+            <span class="n">free_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">mutate_protected</span><span class="p">:</span>
+                <span class="n">to_mutate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="n">mating_tuples</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_mating_tuples</span><span class="p">()</span>
+        <span class="n">surviving_parents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">to_mate</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># now we count how many parents to keep</span>
+        <span class="k">for</span> <span class="n">mating_tuple</span> <span class="ow">in</span> <span class="n">mating_tuples</span><span class="p">:</span>
+            <span class="c1"># probability to keep the parents rather than the children</span>
+            <span class="n">keep_parents</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">parent_survival_rate</span>
+            <span class="k">if</span> <span class="n">keep_parents</span><span class="p">:</span>
+                <span class="n">surviving_parents</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">mating_tuple</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">to_mate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mating_tuple</span><span class="p">)</span>
+
+        <span class="c1"># we now fill the lucky parents that survived</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">surviving_parents</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">free_indices</span><span class="p">:</span>
+                <span class="n">new_population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># we might have put that model already in so we don&#39;t want a double reference</span>
+                <span class="n">new_freshness</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">freshness</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                <span class="n">free_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+                <span class="n">to_mutate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">new_idx</span> <span class="ow">in</span> <span class="n">free_indices</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">new_idx</span> <span class="ow">in</span> <span class="n">surviving_parents</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">new_population</span><span class="p">[</span><span class="n">new_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># we might have put that model already in so we don&#39;t want a double reference</span>
+                    <span class="n">new_freshness</span><span class="p">[</span><span class="n">new_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">freshness</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+                    <span class="n">free_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">new_idx</span><span class="p">)</span>
+                    <span class="n">to_mutate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_idx</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># now we can do the actual crossover</span>
+        <span class="k">for</span> <span class="n">mating_tuple</span> <span class="ow">in</span> <span class="n">to_mate</span><span class="p">:</span>
+            <span class="n">party</span> <span class="o">=</span> <span class="p">[</span><span class="n">manager</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">mating_tuple</span><span class="p">]</span>
+            <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover_individual</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">party</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children</span><span class="p">:</span>
+                <span class="n">new_idx</span> <span class="o">=</span> <span class="n">free_indices</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">to_mutate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_idx</span><span class="p">)</span>
+                <span class="n">new_population</span><span class="p">[</span><span class="n">new_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span>
+                <span class="n">new_freshness</span><span class="p">[</span><span class="n">new_idx</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># if we are missing some, we fill the population</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">free_indices</span><span class="p">:</span>
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_parents</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="n">new_population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>  <span class="c1"># we might have put that model already in so we don&#39;t want a double reference</span>
+            <span class="n">new_freshness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">freshness</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">free_indices</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">to_mutate</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># we finally update the manager</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">update_population</span><span class="p">(</span><span class="n">new_population</span><span class="p">,</span> <span class="n">new_freshness</span><span class="p">)</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">update_to_mutate</span><span class="p">(</span><span class="n">new_to_mutate</span><span class="o">=</span><span class="n">to_mutate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">manager</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

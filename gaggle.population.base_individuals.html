@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base_individuals &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Base_nns" href="gaggle.base_nns.html" />
+    <link rel="prev" title="Population" href="gaggle.population.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="gaggle.population.html">Population</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Base_individuals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.population.base_individuals.nn_individual">Nn_individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.population.base_individuals.numpy_individual">Numpy_individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.population.base_individuals.pytorch_individual">Pytorch_individual</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.population.base_individuals.rl_individual">Rl_individual</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.population.html#module-gaggle.population.individual">Individual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.population.html#module-gaggle.population.individual_factory">Individual_factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.population.html#module-gaggle.population.population_manager">Population_manager</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+          <li class="breadcrumb-item"><a href="gaggle.population.html">Population</a></li>
+      <li class="breadcrumb-item active">Base_individuals</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.population.base_individuals.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="base-individuals">
+<h1>Base_individuals<a class="headerlink" href="#base-individuals" title="Permalink to this heading"></a></h1>
+<section id="module-gaggle.population.base_individuals.nn_individual">
+<span id="nn-individual"></span><h2>Nn_individual<a class="headerlink" href="#module-gaggle.population.base_individuals.nn_individual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.base_individuals.nn_individual.</span></span><span class="sig-name descname"><span class="pre">NNIndividual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><code class="xref py py-class docutils literal notranslate"><span class="pre">Individual</span></code></a></p>
+<p>An Individual whose initial parameters are a torch.nn.Module.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.CONFIG_BASE_MODEL_STATE_DICT">
+<span class="sig-name descname"><span class="pre">CONFIG_BASE_MODEL_STATE_DICT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'base_model_state_dict'</span></em><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.CONFIG_BASE_MODEL_STATE_DICT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.debug">
+<span class="sig-name descname"><span class="pre">debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.debug"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.debug" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.debug_tick">
+<span class="sig-name descname"><span class="pre">debug_tick</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.debug_tick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.debug_tick" title="Permalink to this definition"></a></dt>
+<dd><p>Clears plotting for debugs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.eval" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the module in evaluation mode.</p>
+<p>This has any effect only on certain modules. See documentations of
+particular modules for details of their behaviors in training/evaluation
+mode, if they are affected, e.g. <code class="xref py py-class docutils literal notranslate"><span class="pre">Dropout</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm</span></code>,
+etc.</p>
+<p>This is equivalent with <code class="xref py py-meth docutils literal notranslate"><span class="pre">self.train(False)</span></code>.</p>
+<p>See <span class="xref std std-ref">locally-disable-grad-doc</span> for a comparison between
+<cite>.eval()</cite> and several similar mechanisms that may be confused with it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.first_time">
+<span class="sig-name descname"><span class="pre">first_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.first_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.first_time" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if something has been invoked for the first time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.forward" title="Permalink to this definition"></a></dt>
+<dd><p>By default we returned a flattened tensor of the model parameters.</p>
+<p class="rubric">Notes</p>
+<p>We do not return the metadata that can be used to reconstruct the gene_pool dictionary as this should
+not be used to modify the parameters directly (the tensor does not link back to the parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened pytorch tensor of length self.genome_size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.generate_gene_pool">
+<span class="sig-name descname"><span class="pre">generate_gene_pool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.generate_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.generate_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>Should return a dictionary of dictionaries where the inner dictionary has a “param” and a “size” key
+for each of the nn.Parameters in the dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Represents the initialization rule for an individual. It should modify the gene pool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.load">
+<span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ckpt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.load" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.parameters">
+<span class="sig-name descname"><span class="pre">parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recurse</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.parameters" title="Permalink to this definition"></a></dt>
+<dd><p>Returns an iterator over module parameters.</p>
+<p>This is typically passed to an optimizer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>recurse</strong> (<em>bool</em>) – if True, then yields parameters of this module
+and all submodules. Otherwise, yields only parameters that
+are direct members of this module.</p>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Parameter</em> – module parameter</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># xdoctest: +SKIP(&quot;undefined vars&quot;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">param</span><span class="p">),</span> <span class="n">param</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+<span class="go">&lt;class &#39;torch.Tensor&#39;&gt; (20L,)</span>
+<span class="go">&lt;class &#39;torch.Tensor&#39;&gt; (20L, 1L, 5L, 5L)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.outdir_args.OutdirArgs" title="gaggle.arguments.outdir_args.OutdirArgs"><span class="pre">OutdirArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.save" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the individual to a file in the path provided by outdir_args.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outdir_args</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.nn_individual.NNIndividual.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/nn_individual.html#NNIndividual.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.nn_individual.NNIndividual.train" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the module in training mode.</p>
+<p>This has any effect only on certain modules. See documentations of
+particular modules for details of their behaviors in training/evaluation
+mode, if they are affected, e.g. <code class="xref py py-class docutils literal notranslate"><span class="pre">Dropout</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm</span></code>,
+etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mode</strong> (<em>bool</em>) – whether to set training mode (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or evaluation
+mode (<code class="docutils literal notranslate"><span class="pre">False</span></code>). Default: <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.population.base_individuals.numpy_individual">
+<span id="numpy-individual"></span><h2>Numpy_individual<a class="headerlink" href="#module-gaggle.population.base_individuals.numpy_individual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.numpy_individual.NumpyIndividual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.base_individuals.numpy_individual.</span></span><span class="sig-name descname"><span class="pre">NumpyIndividual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">np_params:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'numpy.ndarray'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">None)]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args:</span> <span class="pre">~gaggle.arguments.individual_args.IndividualArgs</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args:</span> <span class="pre">~gaggle.arguments.sys_args.SysArgs</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/numpy_individual.html#NumpyIndividual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.numpy_individual.NumpyIndividual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><code class="xref py py-class docutils literal notranslate"><span class="pre">Individual</span></code></a></p>
+<p>An Individual whose initial parameters are numpy arrays.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.numpy_individual.NumpyIndividual.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/numpy_individual.html#NumpyIndividual.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.numpy_individual.NumpyIndividual.forward" title="Permalink to this definition"></a></dt>
+<dd><p>By default we returned a flattened tensor of the model parameters.</p>
+<p class="rubric">Notes</p>
+<p>We do not return the metadata that can be used to reconstruct the gene_pool dictionary as this should
+not be used to modify the parameters directly (the tensor does not link back to the parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened pytorch tensor of length self.genome_size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.numpy_individual.NumpyIndividual.generate_gene_pool">
+<span class="sig-name descname"><span class="pre">generate_gene_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">np_params:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.ndarray'&gt;,</span> <span class="pre">None)],</span> <span class="pre">*args,</span> <span class="pre">**kwargs</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'torch.nn.parameter.Parameter'&gt;,</span> <span class="pre">None),</span> <span class="pre">slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)],</span> <span class="pre">None)]</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/numpy_individual.html#NumpyIndividual.generate_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.numpy_individual.NumpyIndividual.generate_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>Should return a dictionary of dictionaries where the inner dictionary has a “param” and a “size” key
+for each of the nn.Parameters in the dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.numpy_individual.NumpyIndividual.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/numpy_individual.html#NumpyIndividual.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.numpy_individual.NumpyIndividual.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Represents the initialization rule for an individual. It should modify the gene pool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.population.base_individuals.pytorch_individual">
+<span id="pytorch-individual"></span><h2>Pytorch_individual<a class="headerlink" href="#module-gaggle.population.base_individuals.pytorch_individual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.pytorch_individual.PytorchIndividual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.base_individuals.pytorch_individual.</span></span><span class="sig-name descname"><span class="pre">PytorchIndividual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensors:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'torch.Tensor'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">None)]</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args:</span> <span class="pre">~gaggle.arguments.individual_args.IndividualArgs</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args:</span> <span class="pre">~gaggle.arguments.sys_args.SysArgs</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/pytorch_individual.html#PytorchIndividual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.pytorch_individual.PytorchIndividual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><code class="xref py py-class docutils literal notranslate"><span class="pre">Individual</span></code></a></p>
+<p>An Individual whose initial parameters are pytorch tensors.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/pytorch_individual.html#PytorchIndividual.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.forward" title="Permalink to this definition"></a></dt>
+<dd><p>By default we returned a flattened tensor of the model parameters.</p>
+<p class="rubric">Notes</p>
+<p>We do not return the metadata that can be used to reconstruct the gene_pool dictionary as this should
+not be used to modify the parameters directly (the tensor does not link back to the parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened pytorch tensor of length self.genome_size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.generate_gene_pool">
+<span class="sig-name descname"><span class="pre">generate_gene_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">tensors:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'torch.Tensor'&gt;,</span> <span class="pre">None)],</span> <span class="pre">*args,</span> <span class="pre">**kwargs</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'torch.nn.parameter.Parameter'&gt;,</span> <span class="pre">None),</span> <span class="pre">slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)],</span> <span class="pre">None)]</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/pytorch_individual.html#PytorchIndividual.generate_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.generate_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>Should return a dictionary of dictionaries where the inner dictionary has a “param” and a “size” key
+for each of the nn.Parameters in the dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="reference internal" href="_modules/gaggle/population/base_individuals/pytorch_individual.html#PytorchIndividual.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.pytorch_individual.PytorchIndividual.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Represents the initialization rule for an individual. It should modify the gene pool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.population.base_individuals.rl_individual">
+<span id="rl-individual"></span><h2>Rl_individual<a class="headerlink" href="#module-gaggle.population.base_individuals.rl_individual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.rl_individual.RLIndividual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.base_individuals.rl_individual.</span></span><span class="sig-name descname"><span class="pre">RLIndividual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/rl_individual.html#RLIndividual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.rl_individual.RLIndividual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gaggle.population.base_individuals.nn_individual.NNIndividual" title="gaggle.population.base_individuals.nn_individual.NNIndividual"><code class="xref py py-class docutils literal notranslate"><span class="pre">NNIndividual</span></code></a></p>
+<p>NNIndividual wrapper that adds an argmax to the prediction as RL problem usually require the output of the model
+to be an action rather than logits.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.base_individuals.rl_individual.RLIndividual.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/base_individuals/rl_individual.html#RLIndividual.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.base_individuals.rl_individual.RLIndividual.forward" title="Permalink to this definition"></a></dt>
+<dd><p>By default we returned a flattened tensor of the model parameters.</p>
+<p class="rubric">Notes</p>
+<p>We do not return the metadata that can be used to reconstruct the gene_pool dictionary as this should
+not be used to modify the parameters directly (the tensor does not link back to the parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened pytorch tensor of length self.genome_size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.population.html" class="btn btn-neutral float-left" title="Population" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.base_nns.html" class="btn btn-neutral float-right" title="Base_nns" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

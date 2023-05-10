@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utils &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Arguments" href="gaggle.arguments.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.individual_helper">Individual_helper</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.individual_helper.from_gene_pool"><code class="docutils literal notranslate"><span class="pre">from_gene_pool()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.individual_helper.from_gene_pool_no_metadata"><code class="docutils literal notranslate"><span class="pre">from_gene_pool_no_metadata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.individual_helper.from_tensor"><code class="docutils literal notranslate"><span class="pre">from_tensor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.metrics">Metrics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.metrics.accuracy"><code class="docutils literal notranslate"><span class="pre">accuracy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.numpy_helper">Numpy_helper</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.numpy_helper.tmp_seed"><code class="docutils literal notranslate"><span class="pre">tmp_seed()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.smooth_value">Smooth_value</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.smooth_value.SmoothedValue"><code class="docutils literal notranslate"><span class="pre">SmoothedValue</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.special_images">Special_images</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_images.image_to_tensor"><code class="docutils literal notranslate"><span class="pre">image_to_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_images.plot_images"><code class="docutils literal notranslate"><span class="pre">plot_images()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.special_print">Special_print</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_print.bcolors"><code class="docutils literal notranslate"><span class="pre">bcolors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_print.print_dict_highlighted"><code class="docutils literal notranslate"><span class="pre">print_dict_highlighted()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_print.print_highlighted"><code class="docutils literal notranslate"><span class="pre">print_highlighted()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_print.print_response"><code class="docutils literal notranslate"><span class="pre">print_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.special_print.print_warning"><code class="docutils literal notranslate"><span class="pre">print_warning()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.torch_helper">Torch_helper</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.torch_helper.UnNormalize"><code class="docutils literal notranslate"><span class="pre">UnNormalize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.torch_helper.set_multiple_indices_to_zero"><code class="docutils literal notranslate"><span class="pre">set_multiple_indices_to_zero()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.torch_helper.tensor_hash"><code class="docutils literal notranslate"><span class="pre">tensor_hash()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.torch_helper.yield_batches"><code class="docutils literal notranslate"><span class="pre">yield_batches()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.utils.web">Web</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.utils.web.is_valid_url"><code class="docutils literal notranslate"><span class="pre">is_valid_url()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+      <li class="breadcrumb-item active">Utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils">
+<h1>Utils<a class="headerlink" href="#utils" title="Permalink to this heading"></a></h1>
+<section id="module-gaggle.utils.individual_helper">
+<span id="individual-helper"></span><h2>Individual_helper<a class="headerlink" href="#module-gaggle.utils.individual_helper" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.individual_helper.from_gene_pool">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.individual_helper.</span></span><span class="sig-name descname"><span class="pre">from_gene_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">gene_pool:</span> <span class="pre">dict)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'torch.Tensor'&gt;,</span> <span class="pre">tuple[list,</span> <span class="pre">list]</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/individual_helper.html#from_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.individual_helper.from_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>From a gene_pool generates a flattened tensor that contains all the params of the gene_pool as well
+as metadata to be passed to from_tensor to recreate the gene_pool after any
+modification to the newly created flattened tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gene_pool</strong> – dictionary of parameters that defines an Individual.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flattened gene tensor and a metadata tuple.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.individual_helper.from_gene_pool_no_metadata">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.individual_helper.</span></span><span class="sig-name descname"><span class="pre">from_gene_pool_no_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="_modules/gaggle/utils/individual_helper.html#from_gene_pool_no_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.individual_helper.from_gene_pool_no_metadata" title="Permalink to this definition"></a></dt>
+<dd><p>Same as from_gene_pool but does return the metadata. It is used in cases where we do not care
+about transforming the tensor back into the gene pool (for example metric computation on the gene pool).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gene_pool</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flattened gene tensor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.individual_helper.from_tensor">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.individual_helper.</span></span><span class="sig-name descname"><span class="pre">from_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_pool</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/gaggle/utils/individual_helper.html#from_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.individual_helper.from_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the parameters in gene_pool from the flattened tensor tensor inplace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gene_pool</strong> – dictionary of parameters that defines an Individual.</p></li>
+<li><p><strong>tensor</strong> – the flattened tensor of weights that will be transformed into the gene_pool.</p></li>
+<li><p><strong>metadata</strong> – the metadata that was acquired when originally running from_gene_pool on gene_pool to get the tensor.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The modified gene_pool dictionary</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>It applies the transformation of the gene_pool inplace on the gene_pool argument (even though it still returns
+it)</p>
+</dd></dl>
+
+</section>
+<section id="module-gaggle.utils.metrics">
+<span id="metrics"></span><h2>Metrics<a class="headerlink" href="#module-gaggle.utils.metrics" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.metrics.accuracy">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.metrics.</span></span><span class="sig-name descname"><span class="pre">accuracy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/gaggle/utils/metrics.html#accuracy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.metrics.accuracy" title="Permalink to this definition"></a></dt>
+<dd><p>Accuracy metric for classification.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_pred</strong> – </p></li>
+<li><p><strong>y</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</section>
+<section id="module-gaggle.utils.numpy_helper">
+<span id="numpy-helper"></span><h2>Numpy_helper<a class="headerlink" href="#module-gaggle.utils.numpy_helper" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.numpy_helper.tmp_seed">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.numpy_helper.</span></span><span class="sig-name descname"><span class="pre">tmp_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/numpy_helper.html#tmp_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.numpy_helper.tmp_seed" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.utils.smooth_value">
+<span id="smooth-value"></span><h2>Smooth_value<a class="headerlink" href="#module-gaggle.utils.smooth_value" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.utils.smooth_value.</span></span><span class="sig-name descname"><span class="pre">SmoothedValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">window_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'{avg:.3f}'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/smooth_value.html#SmoothedValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Track a series of values and provide access to smoothed values over a
+window or the global series average.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.avg">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">avg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.avg" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.global_avg">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">global_avg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.global_avg" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.max">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.max" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.median">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">median</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.median" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.min">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.min" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/smooth_value.html#SmoothedValue.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.reset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/smooth_value.html#SmoothedValue.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.update_list">
+<span class="sig-name descname"><span class="pre">update_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/smooth_value.html#SmoothedValue.update_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.update_list" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="gaggle.utils.smooth_value.SmoothedValue.value">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#gaggle.utils.smooth_value.SmoothedValue.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.utils.special_images">
+<span id="special-images"></span><h2>Special_images<a class="headerlink" href="#module-gaggle.utils.special_images" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_images.image_to_tensor">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_images.</span></span><span class="sig-name descname"><span class="pre">image_to_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_images.html#image_to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_images.image_to_tensor" title="Permalink to this definition"></a></dt>
+<dd><p>Loads a PIL image and returns it with values scaled to [0,1]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_images.plot_images">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_images.</span></span><span class="sig-name descname"><span class="pre">plot_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">400</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savefig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_images.html#plot_images"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_images.plot_images" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.utils.special_print">
+<span id="special-print"></span><h2>Special_print<a class="headerlink" href="#module-gaggle.utils.special_print" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_print.</span></span><span class="sig-name descname"><span class="pre">bcolors</span></span><a class="reference internal" href="_modules/gaggle/utils/special_print.html#bcolors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_print.bcolors" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.BOLD">
+<span class="sig-name descname"><span class="pre">BOLD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[1m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.BOLD" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.ENDC">
+<span class="sig-name descname"><span class="pre">ENDC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[0m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.ENDC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.FAIL">
+<span class="sig-name descname"><span class="pre">FAIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[91m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.FAIL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.HEADER">
+<span class="sig-name descname"><span class="pre">HEADER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[95m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.HEADER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.OKBLUE">
+<span class="sig-name descname"><span class="pre">OKBLUE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[94m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.OKBLUE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.OKCYAN">
+<span class="sig-name descname"><span class="pre">OKCYAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[96m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.OKCYAN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.OKGREEN">
+<span class="sig-name descname"><span class="pre">OKGREEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[92m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.OKGREEN" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.UNDERLINE">
+<span class="sig-name descname"><span class="pre">UNDERLINE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[4m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.UNDERLINE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.bcolors.WARNING">
+<span class="sig-name descname"><span class="pre">WARNING</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'\x1b[93m'</span></em><a class="headerlink" href="#gaggle.utils.special_print.bcolors.WARNING" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.print_dict_highlighted">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_print.</span></span><span class="sig-name descname"><span class="pre">print_dict_highlighted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\x1b[92m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_print.html#print_dict_highlighted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_print.print_dict_highlighted" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.print_highlighted">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_print.</span></span><span class="sig-name descname"><span class="pre">print_highlighted</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\x1b[92m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_print.html#print_highlighted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_print.print_highlighted" title="Permalink to this definition"></a></dt>
+<dd><section id="prints-a-highlighted-message-separated-by-dashes">
+<h3>Prints a highlighted message separated by dashes<a class="headerlink" href="#prints-a-highlighted-message-separated-by-dashes" title="Permalink to this heading"></a></h3>
+</section>
+<section id="content">
+<h3>content<a class="headerlink" href="#content" title="Permalink to this heading"></a></h3>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.print_response">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_print.</span></span><span class="sig-name descname"><span class="pre">print_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\x1b[92m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_print.html#print_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_print.print_response" title="Permalink to this definition"></a></dt>
+<dd><section id="id1">
+<h3>Prints a highlighted message separated by dashes<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id2">
+<h3>content<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.special_print.print_warning">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.special_print.</span></span><span class="sig-name descname"><span class="pre">print_warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/special_print.html#print_warning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.special_print.print_warning" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.utils.torch_helper">
+<span id="torch-helper"></span><h2>Torch_helper<a class="headerlink" href="#module-gaggle.utils.torch_helper" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.utils.torch_helper.UnNormalize">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.utils.torch_helper.</span></span><span class="sig-name descname"><span class="pre">UnNormalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/torch_helper.html#UnNormalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.torch_helper.UnNormalize" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.torch_helper.set_multiple_indices_to_zero">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.torch_helper.</span></span><span class="sig-name descname"><span class="pre">set_multiple_indices_to_zero</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/torch_helper.html#set_multiple_indices_to_zero"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.torch_helper.set_multiple_indices_to_zero" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.torch_helper.tensor_hash">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.torch_helper.</span></span><span class="sig-name descname"><span class="pre">tensor_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/torch_helper.html#tensor_hash"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.torch_helper.tensor_hash" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.torch_helper.yield_batches">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.torch_helper.</span></span><span class="sig-name descname"><span class="pre">yield_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/torch_helper.html#yield_batches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.torch_helper.yield_batches" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.utils.web">
+<span id="web"></span><h2>Web<a class="headerlink" href="#module-gaggle.utils.web" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.utils.web.is_valid_url">
+<span class="sig-prename descclassname"><span class="pre">gaggle.utils.web.</span></span><span class="sig-name descname"><span class="pre">is_valid_url</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/utils/web.html#is_valid_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.utils.web.is_valid_url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.arguments.html" class="btn btn-neutral float-left" title="Arguments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

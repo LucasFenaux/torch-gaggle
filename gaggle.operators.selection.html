@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Selection &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Base_selections" href="gaggle.operators.selection.base_selections.html" />
+    <link rel="prev" title="Base_mutations" href="gaggle.operators.mutation.base_mutations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="gaggle.operators.html">Operators</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gaggle.operators.crossover.html">Crossover</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.operators.mutation.html">Mutation</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Selection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="gaggle.operators.selection.base_selections.html">Base_selections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Selection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.operators.selection.selection_factory">Selection_factory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+          <li class="breadcrumb-item"><a href="gaggle.operators.html">Operators</a></li>
+      <li class="breadcrumb-item active">Selection</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.operators.selection.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="selection">
+<h1>Selection<a class="headerlink" href="#selection" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.operators.selection.base_selections.html">Base_selections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.selection.base_selections.html#module-gaggle.operators.selection.base_selections.probabilistic_tournament_selection">Probabilistic_tournament_selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.selection.base_selections.html#module-gaggle.operators.selection.base_selections.relative_weighted_selection">Relative_weighted_selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.selection.base_selections.html#module-gaggle.operators.selection.base_selections.simple_tournament_selection">Simple_tournament_selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.selection.base_selections.html#module-gaggle.operators.selection.base_selections.truncation_selection">Truncation_selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.selection.base_selections.html#module-gaggle.operators.selection.base_selections.weighted_selection">Weighted_selection</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h2>Selection<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<span class="target" id="module-gaggle.operators.selection.selection"></span><dl class="py class">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection.Selection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.operators.selection.selection.</span></span><span class="sig-name descname"><span class="pre">Selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/operators/selection/selection.html#Selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection.Selection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The parent class for any Selection Operator.
+It gives functions to select the protected (elitism) set and to select the parents for crossover.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection.Selection.select_all">
+<span class="sig-name descname"><span class="pre">select_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mates_per_crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children_per_crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></span><a class="reference internal" href="_modules/gaggle/operators/selection/selection.html#Selection.select_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection.Selection.select_all" title="Permalink to this definition"></a></dt>
+<dd><p>Calls both the protoected and parent selection fucntions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection.Selection.select_parents">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">select_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">mates_per_crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">children_per_crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></span><a class="reference internal" href="_modules/gaggle/operators/selection/selection.html#Selection.select_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection.Selection.select_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Should select both the parents and the mating tuples</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection.Selection.select_protected">
+<span class="sig-name descname"><span class="pre">select_protected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></span><a class="reference internal" href="_modules/gaggle/operators/selection/selection.html#Selection.select_protected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection.Selection.select_protected" title="Permalink to this definition"></a></dt>
+<dd><p>By default, the select protected is elitism, to turn off elitism, set elitism to 0. in ga_args.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.operators.selection.selection_factory">
+<span id="selection-factory"></span><h2>Selection_factory<a class="headerlink" href="#module-gaggle.operators.selection.selection_factory" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection_factory.SelectionFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.operators.selection.selection_factory.</span></span><span class="sig-name descname"><span class="pre">SelectionFactory</span></span><a class="reference internal" href="_modules/gaggle/operators/selection/selection_factory.html#SelectionFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection_factory.SelectionFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Factory that generates pre-existing available selection operators.
+SelectionFactory.selections stores said selection operators as a dictionary with
+their name as the key and the uninitialized selection object as the value.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection_factory.SelectionFactory.from_ga_args">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_ga_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#gaggle.operators.selection.selection.Selection" title="gaggle.operators.selection.selection.Selection"><span class="pre">Selection</span></a></span></span><a class="reference internal" href="_modules/gaggle/operators/selection/selection_factory.html#SelectionFactory.from_ga_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection_factory.SelectionFactory.from_ga_args" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the requested selection from the dictionary of available selections.</p>
+<p>This is done by using the attribute ga_args.selection as
+the lookup key to SelectionFactory.selections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ga_args</strong> – GAArgs object for the current run</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An initialized selection class object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection_factory.SelectionFactory.get_keys">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/operators/selection/selection_factory.html#SelectionFactory.get_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection_factory.SelectionFactory.get_keys" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the list of currently registered selections</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection_factory.SelectionFactory.selections">
+<span class="sig-name descname"><span class="pre">selections</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'probabilistic_tournament':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.operators.selection.base_selections.probabilistic_tournament_selection.ProbabilisticTournamentSelection'&gt;,</span> <span class="pre">'relative_weighted':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.operators.selection.base_selections.relative_weighted_selection.RelativeWeightedSelection'&gt;,</span> <span class="pre">'simple_tournament':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.operators.selection.base_selections.simple_tournament_selection.SimpleTournamentSelection'&gt;,</span> <span class="pre">'truncation':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.operators.selection.base_selections.truncation_selection.TruncationSelection'&gt;,</span> <span class="pre">'weighted':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.operators.selection.base_selections.weighted_selection.WeightedSelection'&gt;}</span></em><a class="headerlink" href="#gaggle.operators.selection.selection_factory.SelectionFactory.selections" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.operators.selection.selection_factory.SelectionFactory.update">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/operators/selection/selection_factory.html#SelectionFactory.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.operators.selection.selection_factory.SelectionFactory.update" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new selection operator to the dictionary of selections that can be created.</p>
+<p>It is added to SelectionFactory.selections</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – selection name that will be used as the dictionary lookup key</p></li>
+<li><p><strong>selection</strong> – selection class object, it needs to not be already initialized</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.operators.mutation.base_mutations.html" class="btn btn-neutral float-left" title="Base_mutations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.operators.selection.base_selections.html" class="btn btn-neutral float-right" title="Base_selections" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

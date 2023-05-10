@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.problem.dataset.dataset_factory &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.problem.dataset.dataset_factory</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.problem.dataset.dataset_factory</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.arguments.problem_args</span> <span class="kn">import</span> <span class="n">ProblemArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.sys_args</span> <span class="kn">import</span> <span class="n">SysArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.dataset.base_datasets.cifar10</span> <span class="kn">import</span> <span class="n">CIFAR10</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.dataset.base_datasets.mnist</span> <span class="kn">import</span> <span class="n">MNIST</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.dataset.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataWrapper</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="DatasetFactory"><a class="viewcode-back" href="../../../../gaggle.problem.dataset.html#gaggle.problem.dataset.dataset_factory.DatasetFactory">[docs]</a><span class="k">class</span> <span class="nc">DatasetFactory</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Factory that generates pre-existing available datasets.</span>
+<span class="sd">    DatasetFactory.datasets stores said datasets as a dictionary with their name as key and the uninitialized Dataset</span>
+<span class="sd">    object as value.</span>
+
+<span class="sd">    See Also:</span>
+<span class="sd">        Dataset Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">datasets</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;CIFAR10&quot;</span><span class="p">:</span> <span class="n">CIFAR10</span><span class="p">,</span>
+        <span class="s2">&quot;MNIST&quot;</span><span class="p">:</span> <span class="n">MNIST</span><span class="p">,</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="DatasetFactory.get_keys"><a class="viewcode-back" href="../../../../gaggle.problem.dataset.html#gaggle.problem.dataset.dataset_factory.DatasetFactory.get_keys">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gets the keys (dataset names) for the available pre-built datasets.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list of strings that are the keys to DatasetFactory.datasets</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DatasetFactory.update"><a class="viewcode-back" href="../../../../gaggle.problem.dataset.html#gaggle.problem.dataset.dataset_factory.DatasetFactory.update">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Add a new dataset to the dictionary of datasets that can be created.</span>
+
+<span class="sd">        It is added to DatasetFactory.datasets</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: dataset name that will be used as the dictionary lookup key</span>
+<span class="sd">            dataset: dataset class object, it needs to not be already initialized</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">datasets</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span></div>
+
+<div class="viewcode-block" id="DatasetFactory.from_problem_args"><a class="viewcode-back" href="../../../../gaggle.problem.dataset.html#gaggle.problem.dataset.dataset_factory.DatasetFactory.from_problem_args">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_problem_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">problem_args</span><span class="p">:</span> <span class="n">ProblemArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">:</span> <span class="n">SysArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> \
+            <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initializes the requested dataset from the dictionary of available datasets.</span>
+
+<span class="sd">        This is done by using the attribute problem_args.dataset_name as</span>
+<span class="sd">        the lookup key to DatasetFactory.datasets.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            problem_args: problem args that will be used to build the Dataset</span>
+<span class="sd">            train: whether we should return the training or evaluation dataset</span>
+<span class="sd">            sys_args: system args</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A Dataset object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">problem_args</span> <span class="o">=</span> <span class="n">problem_args</span> <span class="k">if</span> <span class="n">problem_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ProblemArgs</span><span class="p">()</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dataset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span><span class="p">(</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">,</span> <span class="n">sys_args</span><span class="o">=</span><span class="n">sys_args</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DatasetFactory.from_data"><a class="viewcode-back" href="../../../../gaggle.problem.dataset.html#gaggle.problem.dataset.dataset_factory.DatasetFactory.from_data">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1337</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Creates a basic dataset object from given data and targets with basic arguments.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data: data tensor</span>
+<span class="sd">            targets: target/label tensor</span>
+<span class="sd">            train: whether it is a training or evaluation dataset</span>
+<span class="sd">            seed: seed for the randomness of the batch sampling</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A Dataset object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># using default dataset args:</span>
+        <span class="n">problem_args</span> <span class="o">=</span> <span class="n">ProblemArgs</span><span class="p">()</span>
+        <span class="n">problem_args</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+        <span class="n">problem_args</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">problem_args</span><span class="o">=</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">)</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="n">DataWrapper</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="n">targets</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataset</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

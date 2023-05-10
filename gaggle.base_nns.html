@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Base_nns &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Arguments" href="gaggle.arguments.html" />
+    <link rel="prev" title="Base_individuals" href="gaggle.population.base_individuals.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Base_nns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.dqn">Dqn</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.dqn.DQN"><code class="docutils literal notranslate"><span class="pre">DQN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.drqn">Drqn</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.drqn.DRQN"><code class="docutils literal notranslate"><span class="pre">DRQN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.lenet">Lenet</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.lenet.LeNet5"><code class="docutils literal notranslate"><span class="pre">LeNet5</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.resnet">Resnet</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet.ResNet101"><code class="docutils literal notranslate"><span class="pre">ResNet101()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet.ResNet152"><code class="docutils literal notranslate"><span class="pre">ResNet152()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet.ResNet18"><code class="docutils literal notranslate"><span class="pre">ResNet18()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet.ResNet34"><code class="docutils literal notranslate"><span class="pre">ResNet34()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet.ResNet50"><code class="docutils literal notranslate"><span class="pre">ResNet50()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.resnet_x">Resnet_x</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.ResNet"><code class="docutils literal notranslate"><span class="pre">ResNet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet110"><code class="docutils literal notranslate"><span class="pre">resnet110()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet1202"><code class="docutils literal notranslate"><span class="pre">resnet1202()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet20"><code class="docutils literal notranslate"><span class="pre">resnet20()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet32"><code class="docutils literal notranslate"><span class="pre">resnet32()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet44"><code class="docutils literal notranslate"><span class="pre">resnet44()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.resnet_x.resnet56"><code class="docutils literal notranslate"><span class="pre">resnet56()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.base_nns.snet">Snet</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.snet.SNetCIFAR"><code class="docutils literal notranslate"><span class="pre">SNetCIFAR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.base_nns.snet.SNetMNIST"><code class="docutils literal notranslate"><span class="pre">SNetMNIST</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+      <li class="breadcrumb-item active">Base_nns</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.base_nns.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="base-nns">
+<h1>Base_nns<a class="headerlink" href="#base-nns" title="Permalink to this heading"></a></h1>
+<section id="module-gaggle.base_nns.dqn">
+<span id="dqn"></span><h2>Dqn<a class="headerlink" href="#module-gaggle.base_nns.dqn" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.dqn.DQN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.dqn.</span></span><span class="sig-name descname"><span class="pre">DQN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/dqn.html#DQN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.dqn.DQN" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.dqn.DQN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/dqn.html#DQN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.dqn.DQN.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.base_nns.drqn">
+<span id="drqn"></span><h2>Drqn<a class="headerlink" href="#module-gaggle.base_nns.drqn" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.drqn.DRQN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.drqn.</span></span><span class="sig-name descname"><span class="pre">DRQN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_inputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_outputs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/drqn.html#DRQN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.drqn.DRQN" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.drqn.DRQN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/drqn.html#DRQN.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.drqn.DRQN.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.base_nns.lenet">
+<span id="lenet"></span><h2>Lenet<a class="headerlink" href="#module-gaggle.base_nns.lenet" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.lenet.LeNet5">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.lenet.</span></span><span class="sig-name descname"><span class="pre">LeNet5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/lenet.html#LeNet5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.lenet.LeNet5" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.lenet.LeNet5.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/lenet.html#LeNet5.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.lenet.LeNet5.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.base_nns.resnet">
+<span id="resnet"></span><h2>Resnet<a class="headerlink" href="#module-gaggle.base_nns.resnet" title="Permalink to this heading"></a></h2>
+<p>ResNet in PyTorch.
+For Pre-activation ResNet, see ‘preact_resnet.py’.
+Reference:
+[1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
+<blockquote>
+<div><p>Deep Residual Learning for Image Recognition. arXiv:1512.03385</p>
+</div></blockquote>
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet.ResNet101">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet.</span></span><span class="sig-name descname"><span class="pre">ResNet101</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet.html#ResNet101"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet.ResNet101" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet.ResNet152">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet.</span></span><span class="sig-name descname"><span class="pre">ResNet152</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet.html#ResNet152"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet.ResNet152" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet.ResNet18">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet.</span></span><span class="sig-name descname"><span class="pre">ResNet18</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet.html#ResNet18"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet.ResNet18" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet.ResNet34">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet.</span></span><span class="sig-name descname"><span class="pre">ResNet34</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet.html#ResNet34"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet.ResNet34" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet.ResNet50">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet.</span></span><span class="sig-name descname"><span class="pre">ResNet50</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet.html#ResNet50"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet.ResNet50" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.base_nns.resnet_x">
+<span id="resnet-x"></span><h2>Resnet_x<a class="headerlink" href="#module-gaggle.base_nns.resnet_x" title="Permalink to this heading"></a></h2>
+<p>Properly implemented ResNet-s for CIFAR10 as described in paper [1].
+The implementation and structure of this file is hugely influenced by [2]
+which is implemented for ImageNet and doesn’t have option A for identity.
+Moreover, most of the implementations on the web is copy-paste from
+torchvision’s resnet and has wrong number of params.
+Proper ResNet-s for CIFAR10 (for fair comparision and etc.) has following
+number of layers and parameters:
+name      | layers | params
+ResNet20  |    20  | 0.27M
+ResNet32  |    32  | 0.46M
+ResNet44  |    44  | 0.66M
+ResNet56  |    56  | 0.85M
+ResNet110 |   110  |  1.7M
+ResNet1202|  1202  | 19.4m
+which this implementation indeed has.
+Reference:
+[1] Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun</p>
+<blockquote>
+<div><p>Deep Residual Learning for Image Recognition. arXiv:1512.03385</p>
+</div></blockquote>
+<p>[2] <a class="reference external" href="https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py">https://github.com/pytorch/vision/blob/master/torchvision/models/resnet.py</a>
+If you use this implementation in you work, please don’t forget to mention the
+author, Yerlan Idelbayev.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.ResNet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">ResNet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_blocks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#ResNet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.ResNet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.ResNet.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#ResNet.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.ResNet.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet110">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet110</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet110"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet110" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet1202">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet1202</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet1202"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet1202" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet20">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet20</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet20"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet20" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet32">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet32</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet32"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet32" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet44">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet44</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet44"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet44" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="gaggle.base_nns.resnet_x.resnet56">
+<span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.resnet_x.</span></span><span class="sig-name descname"><span class="pre">resnet56</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/resnet_x.html#resnet56"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.resnet_x.resnet56" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-gaggle.base_nns.snet">
+<span id="snet"></span><h2>Snet<a class="headerlink" href="#module-gaggle.base_nns.snet" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.snet.SNetCIFAR">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.snet.</span></span><span class="sig-name descname"><span class="pre">SNetCIFAR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/snet.html#SNetCIFAR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.snet.SNetCIFAR" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Small custom convolutional cifar model. Has ~149K parameters.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.snet.SNetCIFAR.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/snet.html#SNetCIFAR.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.snet.SNetCIFAR.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.base_nns.snet.SNetMNIST">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.base_nns.snet.</span></span><span class="sig-name descname"><span class="pre">SNetMNIST</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/snet.html#SNetMNIST"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.snet.SNetMNIST" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Small custom convolutional mnist model</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.base_nns.snet.SNetMNIST.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/base_nns/snet.html#SNetMNIST.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.base_nns.snet.SNetMNIST.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.population.base_individuals.html" class="btn btn-neutral float-left" title="Base_individuals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.arguments.html" class="btn btn-neutral float-right" title="Arguments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

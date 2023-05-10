@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ga &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Operators" href="gaggle.operators.html" />
+    <link rel="prev" title="Leap" href="gaggle.problem.leap.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Ga</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Ga</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.ga.ga.GA"><code class="docutils literal notranslate"><span class="pre">GA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.ga.ga_factory">Ga_factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.ga.ga_factory.GAFactory"><code class="docutils literal notranslate"><span class="pre">GAFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.ga.simple_ga">Simple_ga</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.ga.simple_ga.SimpleGA"><code class="docutils literal notranslate"><span class="pre">SimpleGA</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+      <li class="breadcrumb-item active">Ga</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.ga.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ga">
+<h1>Ga<a class="headerlink" href="#ga" title="Permalink to this heading"></a></h1>
+<section id="id1">
+<h2>Ga<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<span class="target" id="module-gaggle.ga.ga"></span><dl class="py class">
+<dt class="sig sig-object py" id="gaggle.ga.ga.GA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.ga.ga.</span></span><span class="sig-name descname"><span class="pre">GA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.selection.html#gaggle.operators.selection.selection.Selection" title="gaggle.operators.selection.selection.Selection"><span class="pre">Selection</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover" title="gaggle.operators.crossover.crossover.Crossover"><span class="pre">Crossover</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation" title="gaggle.operators.mutation.mutation.Mutation"><span class="pre">Mutation</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.outdir_args.OutdirArgs" title="gaggle.arguments.outdir_args.OutdirArgs"><span class="pre">OutdirArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.problem.html#gaggle.problem.problem.Problem" title="gaggle.problem.problem.Problem"><span class="pre">Problem</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/ga.html#GA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.ga.GA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The parent class for any GA. Is used to store all the information related to the GA algorithm and
+organize the order of the operators.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.ga.GA.train">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/ga.html#GA.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.ga.GA.train" title="Permalink to this definition"></a></dt>
+<dd><p>Function used to evolve the GA. Needs to be overwritten.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.ga.ga_factory">
+<span id="ga-factory"></span><h2>Ga_factory<a class="headerlink" href="#module-gaggle.ga.ga_factory" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.ga.ga_factory.GAFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.ga.ga_factory.</span></span><span class="sig-name descname"><span class="pre">GAFactory</span></span><a class="reference internal" href="_modules/gaggle/ga/ga_factory.html#GAFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.ga_factory.GAFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Factory that generates pre-existing available GA algorithms.
+GAFactory.gas stores said GAs as a dictionary with their name as key and the uninitialized GA
+object as value.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.ga_factory.GAFactory.from_ga_args">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_ga_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.selection.html#gaggle.operators.selection.selection.Selection" title="gaggle.operators.selection.selection.Selection"><span class="pre">Selection</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover" title="gaggle.operators.crossover.crossover.Crossover"><span class="pre">Crossover</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation" title="gaggle.operators.mutation.mutation.Mutation"><span class="pre">Mutation</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.outdir_args.OutdirArgs" title="gaggle.arguments.outdir_args.OutdirArgs"><span class="pre">OutdirArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.problem.html#gaggle.problem.problem.Problem" title="gaggle.problem.problem.Problem"><span class="pre">Problem</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#gaggle.ga.ga.GA" title="gaggle.ga.ga.GA"><span class="pre">GA</span></a></span></span><a class="reference internal" href="_modules/gaggle/ga/ga_factory.html#GAFactory.from_ga_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.ga_factory.GAFactory.from_ga_args" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the requested GA from the dictionary of available GAs.</p>
+<p>This is done by using the attribute ga_args.ga_name as
+the lookup key to GAFactory.gas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population_manager</strong> – </p></li>
+<li><p><strong>ga_args</strong> – </p></li>
+<li><p><strong>selection</strong> – </p></li>
+<li><p><strong>crossover</strong> – </p></li>
+<li><p><strong>mutation</strong> – </p></li>
+<li><p><strong>problem_args</strong> – </p></li>
+<li><p><strong>sys_args</strong> – </p></li>
+<li><p><strong>outdir_args</strong> – </p></li>
+<li><p><strong>individual_args</strong> – </p></li>
+<li><p><strong>problem</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An initialized GA class object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.ga.ga_factory.GAFactory.gas">
+<span class="sig-name descname"><span class="pre">gas</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'simple':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.ga.simple_ga.SimpleGA'&gt;}</span></em><a class="headerlink" href="#gaggle.ga.ga_factory.GAFactory.gas" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.ga_factory.GAFactory.update">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ga</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/ga_factory.html#GAFactory.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.ga_factory.GAFactory.update" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new GA to the dictionary of GAs that can be created.</p>
+<p>It is added to GAFactory.gas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – dataset name that will be used as the dictionary lookup key</p></li>
+<li><p><strong>ga</strong> – GA class object, it needs to not be already initialized</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.ga.simple_ga">
+<span id="simple-ga"></span><h2>Simple_ga<a class="headerlink" href="#module-gaggle.ga.simple_ga" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.ga.simple_ga.</span></span><span class="sig-name descname"><span class="pre">SimpleGA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.selection.html#gaggle.operators.selection.selection.Selection" title="gaggle.operators.selection.selection.Selection"><span class="pre">Selection</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crossover</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.crossover.html#gaggle.operators.crossover.crossover.Crossover" title="gaggle.operators.crossover.crossover.Crossover"><span class="pre">Crossover</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation" title="gaggle.operators.mutation.mutation.Mutation"><span class="pre">Mutation</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outdir_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.outdir_args.OutdirArgs" title="gaggle.arguments.outdir_args.OutdirArgs"><span class="pre">OutdirArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.problem.html#gaggle.problem.problem.Problem" title="gaggle.problem.problem.Problem"><span class="pre">Problem</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#gaggle.ga.ga.GA" title="gaggle.ga.ga.GA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GA</span></code></a></p>
+<p>Implements a Simple Genetic Algorithm following Mitchell.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.display_metrics">
+<span class="sig-name descname"><span class="pre">display_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">display_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.display_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.display_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Displays the metrics computed and stored in self.saved_metrics. Only displays and saves
+the metrics whose keys are in self.metrics_to_plot. The graphs are also saved to a file in the output folder
+specified in outdir_args.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>display_train</strong> – </p></li>
+<li><p><strong>display_test</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.get_fitness_metric">
+<span class="sig-name descname"><span class="pre">get_fitness_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">fitness:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">None)],</span> <span class="pre">save:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">mode:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'train'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.get_fitness_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.get_fitness_metric" title="Permalink to this definition"></a></dt>
+<dd><p>Outputs basic fitness metrics for a population, like avg fitness, best &amp; worst fitness
+:param fitness: dictionary of fitness
+:param save: whether to save the metrics
+:param mode: what to save
+:return: metrics: dictionary of metrics</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.save_individual">
+<span class="sig-name descname"><span class="pre">save_individual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><span class="pre">Individual</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.save_individual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.save_individual" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the individual provided as well as its fitness to the folder path specified in the outdir_args as
+‘best.pt’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual</strong> – </p></li>
+<li><p><strong>fitness</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.save_metrics">
+<span class="sig-name descname"><span class="pre">save_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.save_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.save_metrics" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the metrics computed and stored in self.saved_metrics. The metrics are saved to files in the output
+folder specified in outdir_args.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_train</strong> – </p></li>
+<li><p><strong>save_test</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.test">
+<span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.test" title="Permalink to this definition"></a></dt>
+<dd><p>Tests population by computing the fitness and its associated metrics without updating the population manager.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>save</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_train_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_test_metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.train" title="Permalink to this definition"></a></dt>
+<dd><p>Call to begin the training process of the population using the arguments stored in this SimpleGA object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test</strong> – </p></li>
+<li><p><strong>callbacks</strong> – </p></li>
+<li><p><strong>display_train_metrics</strong> – </p></li>
+<li><p><strong>display_test_metrics</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.ga.simple_ga.SimpleGA.train_one_generation">
+<span class="sig-name descname"><span class="pre">train_one_generation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/ga/simple_ga.html#SimpleGA.train_one_generation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.ga.simple_ga.SimpleGA.train_one_generation" title="Permalink to this definition"></a></dt>
+<dd><p>Standard one generation GA pipeline</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.problem.leap.html" class="btn btn-neutral float-left" title="Leap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.operators.html" class="btn btn-neutral float-right" title="Operators" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

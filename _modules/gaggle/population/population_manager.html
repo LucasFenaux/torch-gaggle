@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.population.population_manager &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.population.population_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.population.population_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.arguments.sys_args</span> <span class="kn">import</span> <span class="n">SysArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.individual_args</span> <span class="kn">import</span> <span class="n">IndividualArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.ga_args</span> <span class="kn">import</span> <span class="n">GAArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.population.individual_factory</span> <span class="kn">import</span> <span class="n">IndividualFactory</span>
+<span class="kn">from</span> <span class="nn">gaggle.population</span> <span class="kn">import</span> <span class="n">Individual</span>
+
+
+<div class="viewcode-block" id="PopulationManager"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager">[docs]</a><span class="k">class</span> <span class="nc">PopulationManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Stores and manages all the individuals keeping track of their fitness.</span>
+<span class="sd">     To avoid wasteful computation, we optionally keep track of an individual’s freshness and only </span>
+<span class="sd">     recompute its fitness if it was modified since its fitness was last computed.</span>
+<span class="sd">     </span>
+<span class="sd">     The Population Manager also provides a standardized interface for the evolutionary operators to access and update</span>
+<span class="sd">     individuals. It stores all the individual-related meta-information required for the operators, such as which</span>
+<span class="sd">     parents have been chosen, which individuals will be crossed over etc. This simplifies the operator pipeline by</span>
+<span class="sd">     avoiding the need for operators to interface with each other directly.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">:</span> <span class="n">GAArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">individual_args</span><span class="p">:</span> <span class="n">IndividualArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">:</span> <span class="n">SysArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">default_individual</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Individual</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span> <span class="o">=</span> <span class="n">ga_args</span> <span class="k">if</span> <span class="n">ga_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">GAArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span> <span class="o">=</span> <span class="n">individual_args</span> <span class="k">if</span> <span class="n">individual_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">IndividualArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span> <span class="o">=</span> <span class="n">sys_args</span> <span class="k">if</span> <span class="n">sys_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">SysArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">sys_args</span><span class="o">.</span><span class="n">device</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># store flags to re-compute fitness, set flags to false when the model is modified</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">protected</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># a list of the current model indices that are protected and must survive crossover phase</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># a list of the current parent indices for the current generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mating_tuples</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># a list of the current tuples of parents to be mated in the current generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_mutate</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># a list of the current indices to mutate for the current generation</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dictionary of custom buffers that can be used to store metadata for training</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ga_args</span><span class="o">.</span><span class="n">population_size</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">default_individual</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">default_individual</span><span class="p">(</span><span class="n">individual_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">IndividualFactory</span><span class="o">.</span><span class="n">from_individual_args</span><span class="p">(</span>
+                <span class="n">individual_args</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population_size</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="PopulationManager.apply_bounds"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.apply_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">apply_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Applies the parameter value bounds if they were set to a value other than None in the individual_args.</span>
+<span class="sd">        This calls each individual&#39;s own apply_bounds with the lower and upper bound.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            ids: list of ids of the individuals to which this needs to be applied</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">param_lower_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">param_upper_bound</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">individual_id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">individual_id</span><span class="p">]</span><span class="o">.</span><span class="n">apply_bounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">param_lower_bound</span><span class="p">,</span>
+                                                            <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">param_upper_bound</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PopulationManager.create_buffer"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.create_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">create_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">initial_value</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wrapper that allows for storage of custom buffers. This can be used to store meta-data when building custom</span>
+<span class="sd">        operators that need to communicate with one-another.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: unique key associated with the buffer that will serve as lookup</span>
+<span class="sd">            initial_value: initial value of the buffer, can be anything</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">initial_value</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_buffer"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">get_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets a buffer associated with the key key that was created using self.create_buffer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buffer </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> requested does not exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_buffer"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_buffer">[docs]</a>    <span class="k">def</span> <span class="nf">update_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_value</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the value of a buffer associated with key key that was created using self.create_buffer </span>
+<span class="sd">        using new value new_value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key:</span>
+<span class="sd">            new_value:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Buffer </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> requested does not exist&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">custom_buffers</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_value</span></div>
+
+<div class="viewcode-block" id="PopulationManager.train"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the individuals to training mode. Is used if individuals have training specific configurations.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">train</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PopulationManager.eval"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.eval">[docs]</a>    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the individuals to evaluation mode. Is used if individuals have evaluation specific configurations.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_size</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="PopulationManager.is_fresh"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.is_fresh">[docs]</a>    <span class="k">def</span> <span class="nf">is_fresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if an individual with id individual_id is fresh. Meaning whether its fitness needs to </span>
+<span class="sd">        be recomputed or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            individual_id:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A boolean that reflects whether the individual&#39;s fitness needs to be recomputed or</span>
+<span class="sd">        not. True if it does, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span><span class="p">[</span><span class="n">individual_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PopulationManager.set_freshness"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.set_freshness">[docs]</a>    <span class="k">def</span> <span class="nf">set_freshness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">freshness</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set an individual&#39;s freshness.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            individual_id:</span>
+<span class="sd">            freshness:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span><span class="p">[</span><span class="n">individual_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">freshness</span></div>
+
+<div class="viewcode-block" id="PopulationManager.set_individual_fitness"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.set_individual_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">set_individual_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set an individual&#39;s fitness.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            individual_id:</span>
+<span class="sd">            fitness:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">[</span><span class="n">individual_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">fitness</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_individual_fitness"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_individual_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">get_individual_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get an individual&#39;s fitness</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            individual_id:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span><span class="p">[</span><span class="n">individual_id</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_fitness"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">get_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fitness</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_individual"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_individual">[docs]</a>    <span class="k">def</span> <span class="nf">get_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual_idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="n">individual_idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_parents"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_parents">[docs]</a>    <span class="k">def</span> <span class="nf">update_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_parents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the list of parent ids with a new list of parent ids.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_parents:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parents</span> <span class="o">=</span> <span class="n">new_parents</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_parents"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_parents">[docs]</a>    <span class="k">def</span> <span class="nf">get_parents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parents</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_mating_tuples"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_mating_tuples">[docs]</a>    <span class="k">def</span> <span class="nf">update_mating_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_tuples</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the list of mating tuples with a new list of mating tuples.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_tuples:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mating_tuples</span> <span class="o">=</span> <span class="n">new_tuples</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_mating_tuples"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_mating_tuples">[docs]</a>    <span class="k">def</span> <span class="nf">get_mating_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mating_tuples</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_protected"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_protected">[docs]</a>    <span class="k">def</span> <span class="nf">update_protected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_protected</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the list of protected individual ids (individuals that will survive to the next generation no matter</span>
+<span class="sd">        what, similar to elitism) with a new list of protected individual ids.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_protected:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">protected</span> <span class="o">=</span> <span class="n">new_protected</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_protected"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_protected">[docs]</a>    <span class="k">def</span> <span class="nf">get_protected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">protected</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_to_mutate"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_to_mutate">[docs]</a>    <span class="k">def</span> <span class="nf">update_to_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_to_mutate</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the list of individual ids that need to be mutated during the next call to a Mutation operator with a</span>
+<span class="sd">        new list of individual ids.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_to_mutate:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_mutate</span> <span class="o">=</span> <span class="n">new_to_mutate</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_to_mutate"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_to_mutate">[docs]</a>    <span class="k">def</span> <span class="nf">get_to_mutate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mutate</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_population"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_population">[docs]</a>    <span class="k">def</span> <span class="nf">get_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_freshness"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_freshness">[docs]</a>    <span class="k">def</span> <span class="nf">get_freshness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_num_protected"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_num_protected">[docs]</a>    <span class="k">def</span> <span class="nf">get_num_protected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">protected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PopulationManager.update_population"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.update_population">[docs]</a>    <span class="k">def</span> <span class="nf">update_population</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_individuals</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">:</span> <span class="n">Individual</span><span class="p">],</span> <span class="n">new_freshness</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">:</span> <span class="nb">bool</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the entire population as well as its freshness with new dictionaries of {id: Individual} and</span>
+<span class="sd">        {id: bool}.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_individuals:</span>
+<span class="sd">            new_freshness:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population</span> <span class="o">=</span> <span class="n">new_individuals</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fresh</span> <span class="o">=</span> <span class="n">new_freshness</span></div>
+
+<div class="viewcode-block" id="PopulationManager.get_gene_count"><a class="viewcode-back" href="../../../gaggle.population.html#gaggle.population.population_manager.PopulationManager.get_gene_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_gene_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Assuming all individuals have the same genome size, returns the genome size of the first individual (which</span>
+<span class="sd">        if the assumption holds should be the genome size of all individuals in the population.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Genome size as an int.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">population</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_genome_size</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

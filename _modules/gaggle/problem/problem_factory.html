@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.problem.problem_factory &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.problem.problem_factory</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.problem.problem_factory</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">gaggle.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments</span> <span class="kn">import</span> <span class="n">ProblemArgs</span><span class="p">,</span> <span class="n">SysArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.environment.environment_factory</span> <span class="kn">import</span> <span class="n">EnvironmentFactory</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.environment.rl_problem</span> <span class="kn">import</span> <span class="n">RLProblem</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.leap.leap_problem</span> <span class="kn">import</span> <span class="n">convert_leap_problem</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.dataset.classification_problem</span> <span class="kn">import</span> <span class="n">ClassificationProblem</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem.dataset.dataset_factory</span> <span class="kn">import</span> <span class="n">DatasetFactory</span>
+<span class="kn">from</span> <span class="nn">gaggle.utils.special_print</span> <span class="kn">import</span> <span class="n">print_warning</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+
+<div class="viewcode-block" id="ProblemFactory"><a class="viewcode-back" href="../../../gaggle.problem.html#gaggle.problem.problem_factory.ProblemFactory">[docs]</a><span class="k">class</span> <span class="nc">ProblemFactory</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Factory that generates pre-existing available Problems.</span>
+<span class="sd">    ProblemFactory.problems stores said Problems as a dictionary. It stores problems as 4 types: classification,</span>
+<span class="sd">    rl, leap and custom. Each is a key that holds a dictionary of available problems/datasets/environments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">problems</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;classification&quot;</span><span class="p">:</span> <span class="n">DatasetFactory</span><span class="o">.</span><span class="n">datasets</span><span class="p">,</span>
+        <span class="s2">&quot;rl&quot;</span><span class="p">:</span> <span class="n">EnvironmentFactory</span><span class="o">.</span><span class="n">environments</span><span class="p">,</span>
+        <span class="s2">&quot;leap&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="s2">&quot;custom&quot;</span><span class="p">:</span> <span class="p">{}</span>
+    <span class="p">}</span>
+
+    <span class="n">registrable_problems</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;leap&quot;</span><span class="p">,</span> <span class="s2">&quot;custom&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="ProblemFactory.register_problem"><a class="viewcode-back" href="../../../gaggle.problem.html#gaggle.problem.problem_factory.ProblemFactory.register_problem">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register_problem</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">problem_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">problem_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">problem</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register a new problem to the factory of pre-existing available Problems. Said problem has to be a problem</span>
+<span class="sd">        that is registrable. ProblemFactory.registrable_problems stores the list of problem types that are allowed to</span>
+<span class="sd">        be registrables. For the other types, please check their respective documentation to see how to register them</span>
+<span class="sd">        (for classification: ClassificationProblem and DatasetFactory, for rl: RLProblem and EnvironmentFactory).</span>
+<span class="sd">        </span>
+<span class="sd">        If custom arguments need to be passed at initialization time of the Problem (for example when</span>
+<span class="sd">        ProblemFactory.from_problem_args is called), they can also be passed as *args and **kwargs and they will be</span>
+<span class="sd">        used to initialize the problem.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            problem_type: The key to ProblemFactory.problems.</span>
+<span class="sd">            problem_name: The new problem&#39;s name as a str.</span>
+<span class="sd">            problem: The uninitialized problem.</span>
+<span class="sd">            *args: The args that need to be passed to the problem at initialization time</span>
+<span class="sd">            **kwargs: the kwargs that need to be passed to the problem at initialization time.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">problem_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">registrable_problems</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">problem_type</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+                <span class="n">print_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To register a new classification problem that has the same evaluate as &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;ClassificationProblem but a different dataset,&quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot; please use DatasetFactory.update with the updated dataset.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;If the behavior is modified, then register the new problem as &#39;custom&#39;&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">problem_type</span> <span class="o">==</span> <span class="s2">&quot;rl&quot;</span><span class="p">:</span>
+                <span class="n">print_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To register a new rl problem that has the same evaluate as RLProblem but a different &quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;environment, please use EnvironmentFactory.update with the updated environment.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                              <span class="sa">f</span><span class="s2">&quot;If the behavior is modified, then register the new problem as &#39;custom&#39;&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Can only register new </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">registrable_problems</span><span class="si">}</span><span class="s2"> problems&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">problem_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">problem_name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">problems</span><span class="p">[</span><span class="n">problem_type</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">print_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">problem_name</span><span class="si">}</span><span class="s2"> is an already existing </span><span class="si">{</span><span class="n">problem_type</span><span class="si">}</span><span class="s2"> problem and will be overwritten&quot;</span><span class="p">)</span>
+
+            <span class="bp">cls</span><span class="o">.</span><span class="n">problems</span><span class="p">[</span><span class="n">problem_type</span><span class="p">][</span><span class="n">problem_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemFactory.from_problem_args"><a class="viewcode-back" href="../../../gaggle.problem.html#gaggle.problem.problem_factory.ProblemFactory.from_problem_args">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_problem_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">problem_args</span><span class="p">:</span> <span class="n">ProblemArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">:</span> <span class="n">SysArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Problem</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initializes the requested Problem from the dictionary of available Problems.</span>
+
+<span class="sd">        This is done by using the attributes problem_args.problem_type and problem_args.problem_name as</span>
+<span class="sd">        the lookup keys to ProblemFactory.problems.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            problem_args:</span>
+<span class="sd">            sys_args:</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The initialized Problem requested.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">problem_args</span> <span class="o">=</span> <span class="n">problem_args</span> <span class="k">if</span> <span class="n">problem_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ProblemArgs</span><span class="p">()</span>
+        <span class="n">sys_args</span> <span class="o">=</span> <span class="n">SysArgs</span><span class="p">()</span> <span class="k">if</span> <span class="n">sys_args</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">sys_args</span>
+
+        <span class="n">problem_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">problems</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">problem_type</span> <span class="o">=</span> <span class="n">key</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">problem_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">problem_type</span> <span class="o">==</span> <span class="s2">&quot;classification&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ClassificationProblem</span><span class="p">(</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">problem_type</span> <span class="o">==</span> <span class="s2">&quot;rl&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">RLProblem</span><span class="p">(</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">problem</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">problems</span><span class="p">[</span><span class="n">problem_type</span><span class="p">][</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">problem</span><span class="p">(</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ProblemFactory.convert_and_register_leap_problem"><a class="viewcode-back" href="../../../gaggle.problem.html#gaggle.problem.problem_factory.ProblemFactory.convert_and_register_leap_problem">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert_and_register_leap_problem</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">problem_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">leap_problem</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shortcut method that both converts the leap problem to our Problem class and registers it</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            problem_name:</span>
+<span class="sd">            leap_problem:</span>
+<span class="sd">            *args:</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">registrable_leap_problem</span> <span class="o">=</span> <span class="n">convert_leap_problem</span><span class="p">(</span><span class="n">leap_problem</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">register_problem</span><span class="p">(</span><span class="n">problem_type</span><span class="o">=</span><span class="s2">&quot;leap&quot;</span><span class="p">,</span> <span class="n">problem_name</span><span class="o">=</span><span class="n">problem_name</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="n">registrable_leap_problem</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+                             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

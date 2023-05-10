@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.operators.selection.selection_factory &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.operators.selection.selection_factory</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.operators.selection.selection_factory</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.arguments.ga_args</span> <span class="kn">import</span> <span class="n">GAArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.selection</span> <span class="kn">import</span> <span class="n">Selection</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.base_selections.truncation_selection</span> <span class="kn">import</span> <span class="n">TruncationSelection</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.base_selections.weighted_selection</span> <span class="kn">import</span> <span class="n">WeightedSelection</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.base_selections.relative_weighted_selection</span> <span class="kn">import</span> <span class="n">RelativeWeightedSelection</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.base_selections.probabilistic_tournament_selection</span> <span class="kn">import</span> <span class="n">ProbabilisticTournamentSelection</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators.selection.base_selections.simple_tournament_selection</span> <span class="kn">import</span> <span class="n">SimpleTournamentSelection</span>
+
+
+<div class="viewcode-block" id="SelectionFactory"><a class="viewcode-back" href="../../../../gaggle.operators.selection.html#gaggle.operators.selection.selection_factory.SelectionFactory">[docs]</a><span class="k">class</span> <span class="nc">SelectionFactory</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Factory that generates pre-existing available selection operators.</span>
+<span class="sd">    SelectionFactory.selections stores said selection operators as a dictionary with </span>
+<span class="sd">    their name as the key and the uninitialized selection object as the value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">selections</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;truncation&quot;</span><span class="p">:</span> <span class="n">TruncationSelection</span><span class="p">,</span>
+        <span class="s2">&quot;weighted&quot;</span><span class="p">:</span> <span class="n">WeightedSelection</span><span class="p">,</span>
+        <span class="s2">&quot;relative_weighted&quot;</span><span class="p">:</span> <span class="n">RelativeWeightedSelection</span><span class="p">,</span>
+        <span class="s2">&quot;probabilistic_tournament&quot;</span><span class="p">:</span> <span class="n">ProbabilisticTournamentSelection</span><span class="p">,</span>
+        <span class="s2">&quot;simple_tournament&quot;</span><span class="p">:</span> <span class="n">SimpleTournamentSelection</span>
+    <span class="p">}</span>
+
+<div class="viewcode-block" id="SelectionFactory.get_keys"><a class="viewcode-back" href="../../../../gaggle.operators.selection.html#gaggle.operators.selection.selection_factory.SelectionFactory.get_keys">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the list of currently registered selections &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SelectionFactory.update"><a class="viewcode-back" href="../../../../gaggle.operators.selection.html#gaggle.operators.selection.selection_factory.SelectionFactory.update">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Add a new selection operator to the dictionary of selections that can be created.</span>
+
+<span class="sd">        It is added to SelectionFactory.selections</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: selection name that will be used as the dictionary lookup key</span>
+<span class="sd">            selection: selection class object, it needs to not be already initialized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">Callable</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">selections</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">selection</span></div>
+
+<div class="viewcode-block" id="SelectionFactory.from_ga_args"><a class="viewcode-back" href="../../../../gaggle.operators.selection.html#gaggle.operators.selection.selection_factory.SelectionFactory.from_ga_args">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_ga_args</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">:</span> <span class="n">GAArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Selection</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Initializes the requested selection from the dictionary of available selections.</span>
+
+<span class="sd">        This is done by using the attribute ga_args.selection as</span>
+<span class="sd">        the lookup key to SelectionFactory.selections.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ga_args: GAArgs object for the current run</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            An initialized selection class object.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ga_args</span> <span class="o">=</span> <span class="n">ga_args</span> <span class="k">if</span> <span class="n">ga_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">GAArgs</span><span class="p">()</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ga_args</span><span class="o">.</span><span class="n">selection</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">selection</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ga_args</span><span class="o">.</span><span class="n">selection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">selection</span><span class="p">(</span><span class="n">ga_args</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

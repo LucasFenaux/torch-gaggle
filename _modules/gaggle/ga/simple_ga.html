@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.ga.simple_ga &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.ga.simple_ga</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.ga.simple_ga</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.arguments</span> <span class="kn">import</span> <span class="n">GAArgs</span><span class="p">,</span> <span class="n">SysArgs</span><span class="p">,</span> <span class="n">IndividualArgs</span><span class="p">,</span> <span class="n">ProblemArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.outdir_args</span> <span class="kn">import</span> <span class="n">OutdirArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.population.individual</span> <span class="kn">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">gaggle.population.population_manager</span> <span class="kn">import</span> <span class="n">PopulationManager</span>
+<span class="kn">from</span> <span class="nn">gaggle.utils.special_print</span> <span class="kn">import</span> <span class="n">print_dict_highlighted</span><span class="p">,</span> <span class="n">print_highlighted</span>
+<span class="kn">from</span> <span class="nn">gaggle.operators</span> <span class="kn">import</span> <span class="n">Crossover</span><span class="p">,</span> <span class="n">Mutation</span><span class="p">,</span> <span class="n">Selection</span>
+<span class="kn">from</span> <span class="nn">gaggle.ga</span> <span class="kn">import</span> <span class="n">GA</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem</span> <span class="kn">import</span> <span class="n">Problem</span>
+
+
+<div class="viewcode-block" id="SimpleGA"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA">[docs]</a><span class="k">class</span> <span class="nc">SimpleGA</span><span class="p">(</span><span class="n">GA</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Implements a Simple Genetic Algorithm following Mitchell.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">population_manager</span><span class="p">:</span> <span class="n">PopulationManager</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">:</span> <span class="n">GAArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">selection</span><span class="p">:</span> <span class="n">Selection</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">crossover</span><span class="p">:</span> <span class="n">Crossover</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">mutation</span><span class="p">:</span> <span class="n">Mutation</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">problem_args</span><span class="p">:</span> <span class="n">ProblemArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">sys_args</span><span class="p">:</span> <span class="n">SysArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">outdir_args</span><span class="p">:</span> <span class="n">OutdirArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">individual_args</span><span class="p">:</span> <span class="n">IndividualArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">problem</span><span class="p">:</span> <span class="n">Problem</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleGA</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">population_manager</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">,</span> <span class="n">selection</span><span class="p">,</span> <span class="n">crossover</span><span class="p">,</span> <span class="n">mutation</span><span class="p">,</span> <span class="n">problem_args</span><span class="p">,</span>
+                                       <span class="n">sys_args</span><span class="p">,</span> <span class="n">outdir_args</span><span class="p">,</span> <span class="n">individual_args</span><span class="p">,</span> <span class="n">problem</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;best&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                                <span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                                <span class="s2">&quot;worst&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                                <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                                <span class="s2">&quot;time_taken&quot;</span><span class="p">:</span> <span class="p">[]</span>
+                                                <span class="p">},</span>
+                              <span class="s2">&quot;test_metrics&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;best&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                               <span class="s2">&quot;avg&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                               <span class="s2">&quot;worst&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                               <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                                               <span class="s2">&quot;time_taken&quot;</span><span class="p">:</span> <span class="p">[]</span>
+                                               <span class="p">}</span>
+                              <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metrics_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;best&quot;</span><span class="p">,</span> <span class="s2">&quot;avg&quot;</span><span class="p">,</span> <span class="s2">&quot;worst&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="SimpleGA.save_individual"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.save_individual">[docs]</a>    <span class="k">def</span> <span class="nf">save_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span><span class="p">,</span> <span class="n">fitness</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the individual provided as well as its fitness to the folder path specified in the outdir_args as</span>
+<span class="sd">        &#39;best.pt&#39;.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            individual:</span>
+<span class="sd">            fitness:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">save_every_epoch</span> <span class="ow">or</span> <span class="p">(</span><span class="n">fitness</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="p">)):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;fitness&quot;</span><span class="p">:</span> <span class="n">fitness</span><span class="p">,</span>
+                <span class="n">GAArgs</span><span class="o">.</span><span class="n">CONFIG_KEY</span><span class="p">:</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">),</span>
+                <span class="n">IndividualArgs</span><span class="o">.</span><span class="n">CONFIG_KEY</span><span class="p">:</span> <span class="n">individual</span><span class="o">.</span><span class="n">save</span><span class="p">(),</span>
+            <span class="p">}</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">create_folder_name</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;best.pt&quot;</span><span class="p">)</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+            <span class="n">print_highlighted</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;New best: </span><span class="si">{</span><span class="n">fitness</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">best</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%. Saved at &#39;</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">best</span> <span class="o">=</span> <span class="n">fitness</span></div>
+
+<div class="viewcode-block" id="SimpleGA.get_fitness_metric"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.get_fitness_metric">[docs]</a>    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">get_fitness_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">:</span><span class="nb">float</span><span class="p">],</span> <span class="n">save</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Outputs basic fitness metrics for a population, like avg fitness, best &amp; worst fitness</span>
+<span class="sd">        :param fitness: dictionary of fitness</span>
+<span class="sd">        :param save: whether to save the metrics</span>
+<span class="sd">        :param mode: what to save</span>
+<span class="sd">        :return: metrics: dictionary of metrics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># best</span>
+        <span class="n">best_idx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">fitness</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">fitness</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">best_fitness</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">[</span><span class="n">best_idx</span><span class="p">]</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;best&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">best_idx</span><span class="p">,</span> <span class="n">best_fitness</span><span class="p">]</span>
+        <span class="c1"># worst</span>
+        <span class="n">worst_idx</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">fitness</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">fitness</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+        <span class="n">worst_fitness</span> <span class="o">=</span> <span class="n">fitness</span><span class="p">[</span><span class="n">worst_idx</span><span class="p">]</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;worst&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">worst_idx</span><span class="p">,</span> <span class="n">worst_fitness</span><span class="p">]</span>
+        <span class="c1"># average</span>
+        <span class="n">fitness_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fitness</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">avg_fitness</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fitness_list</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">fitness_list</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">avg_fitness</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;best&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_fitness</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;worst&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">worst_fitness</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;eval&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;best&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_fitness</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;avg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_fitness</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;worst&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">worst_fitness</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">return</span> <span class="n">metrics</span></div>
+
+<div class="viewcode-block" id="SimpleGA.display_metrics"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.display_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">display_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">display_train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">display_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Displays the metrics computed and stored in self.saved_metrics. Only displays and saves</span>
+<span class="sd">        the metrics whose keys are in self.metrics_to_plot. The graphs are also saved to a file in the output folder</span>
+<span class="sd">        specified in outdir_args.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            display_train:</span>
+<span class="sd">            display_test:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">display_train</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Training Metrics&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Generations&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fitness&#39;</span><span class="p">)</span>
+            <span class="n">moving_averages</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_to_plot</span><span class="p">:</span>
+                    <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">):</span>
+                        <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">])</span><span class="o">/</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]))),</span> <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">create_folder_name</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;training_metrics.png&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">display_test</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Eval Metrics&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Generations&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fitness&#39;</span><span class="p">)</span>
+            <span class="n">moving_averages</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">metrics_to_plot</span><span class="p">:</span>
+                    <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">):</span>
+                        <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="p">:</span> <span class="n">i</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">])</span><span class="o">/</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">window_size</span><span class="p">)</span>
+                    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">]))),</span> <span class="n">moving_averages</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">create_folder_name</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;testing_metrics.png&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SimpleGA.save_metrics"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.save_metrics">[docs]</a>    <span class="k">def</span> <span class="nf">save_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">save_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Saves the metrics computed and stored in self.saved_metrics. The metrics are saved to files in the output</span>
+<span class="sd">        folder specified in outdir_args.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            save_train:</span>
+<span class="sd">            save_test:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">save_train</span><span class="p">:</span>
+            <span class="n">train_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">create_folder_name</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;training_metrics.json&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">train_fn</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">save_test</span><span class="p">:</span>
+            <span class="n">eval_fn</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">create_folder_name</span><span class="p">(),</span> <span class="sa">f</span><span class="s2">&quot;test_metrics.json&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">eval_fn</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimpleGA.test"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.test">[docs]</a>    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tests population by computing the fitness and its associated metrics without updating the population manager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            save:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+        <span class="n">test_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">evaluate_population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="p">,</span> <span class="n">use_freshness</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">update_manager</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                        <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">test_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fitness_metric</span><span class="p">(</span><span class="n">test_fitness</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="n">save</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;eval&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_individual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="o">.</span><span class="n">get_individual</span><span class="p">(</span><span class="n">test_metrics</span><span class="p">[</span><span class="s2">&quot;best&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="n">test_metrics</span><span class="p">[</span><span class="s2">&quot;best&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">test_metrics</span><span class="p">[</span><span class="s2">&quot;time_taken&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;time_taken&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_metrics</span><span class="p">[</span><span class="s2">&quot;time_taken&quot;</span><span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test Metrics&quot;</span><span class="p">)</span>
+        <span class="n">print_dict_highlighted</span><span class="p">(</span><span class="n">test_metrics</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimpleGA.train_one_generation"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.train_one_generation">[docs]</a>    <span class="k">def</span> <span class="nf">train_one_generation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Standard one generation GA pipeline</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">train_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">evaluate_population</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="p">,</span>
+                                                         <span class="n">use_freshness</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">use_freshness</span><span class="p">,</span> <span class="n">update_manager</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                         <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_fn</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">crossover_fn</span><span class="o">.</span><span class="n">mates_per_crossover</span><span class="p">,</span>
+                                                          <span class="bp">self</span><span class="o">.</span><span class="n">crossover_fn</span><span class="o">.</span><span class="n">children_per_crossover</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">crossover_fn</span><span class="o">.</span><span class="n">crossover_pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutation_fn</span><span class="o">.</span><span class="n">mutate_pop</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">train_fitness</span></div>
+
+<div class="viewcode-block" id="SimpleGA.train"><a class="viewcode-back" href="../../../gaggle.ga.html#gaggle.ga.simple_ga.SimpleGA.train">[docs]</a>    <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+              <span class="n">display_train_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+              <span class="n">display_test_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call to begin the training process of the population using the arguments stored in this SimpleGA object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            test:</span>
+<span class="sd">            callbacks:</span>
+<span class="sd">            display_train_metrics:</span>
+<span class="sd">            display_test_metrics:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Genome size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">population_manager</span><span class="o">.</span><span class="n">get_gene_count</span><span class="p">()</span><span class="si">:</span><span class="s2">.3e</span><span class="si">}</span><span class="s2"> params&quot;</span><span class="p">)</span>
+
+        <span class="n">print_dict_highlighted</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">callbacks</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">generation</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">generations</span><span class="p">):</span>
+            <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">train_fitness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_one_generation</span><span class="p">()</span>
+            <span class="n">time_taken</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_fitness_metric</span><span class="p">(</span><span class="n">train_fitness</span><span class="p">,</span> <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">)</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">generation</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">generations</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;time_taken&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">time_taken</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">print_dict_highlighted</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+            <span class="c1"># we add the generation and time taken to the saved metrics</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generation</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;train_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;time_taken&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;time_taken&quot;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">test</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">eval_every_generation</span> \
+                    <span class="ow">and</span> <span class="n">generation</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">eval_every_generation</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saved_metrics</span><span class="p">[</span><span class="s2">&quot;test_metrics&quot;</span><span class="p">][</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generation</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
+                <span class="n">callback</span><span class="p">(</span><span class="n">generation</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">display_test_metrics</span> <span class="ow">or</span> <span class="n">display_train_metrics</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">display_metrics</span><span class="p">(</span><span class="n">display_train</span><span class="o">=</span><span class="n">display_train_metrics</span><span class="p">,</span> <span class="n">display_test</span><span class="o">=</span><span class="n">display_test_metrics</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

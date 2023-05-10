@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.operators.mutation.mutation &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.operators.mutation.mutation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.operators.mutation.mutation</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">gaggle.population.individual</span> <span class="kn">import</span> <span class="n">Individual</span>
+<span class="kn">from</span> <span class="nn">gaggle.arguments.ga_args</span> <span class="kn">import</span> <span class="n">GAArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.population.population_manager</span> <span class="kn">import</span> <span class="n">PopulationManager</span>
+
+
+<div class="viewcode-block" id="Mutation"><a class="viewcode-back" href="../../../../gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation">[docs]</a><span class="k">class</span> <span class="nc">Mutation</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; The parent class for any Mutation Operator. </span>
+<span class="sd">    It gives a basic function to mutate a whole population once the function for mutating a single individual is specified</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ga_args</span><span class="p">:</span> <span class="n">GAArgs</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span> <span class="o">=</span> <span class="n">ga_args</span> <span class="k">if</span> <span class="n">ga_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">GAArgs</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Mutation.mutate_individual"><a class="viewcode-back" href="../../../../gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation.mutate_individual">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">mutate_individual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">individual</span><span class="p">:</span> <span class="n">Individual</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Individual</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Speficies how to mutate a single individual</span>
+<span class="sd">        Args:</span>
+<span class="sd">            individuals: a single individual to mutate</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            A single individual after mutation&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Mutation.mutate_pop"><a class="viewcode-back" href="../../../../gaggle.operators.mutation.html#gaggle.operators.mutation.mutation.Mutation.mutate_pop">[docs]</a>    <span class="k">def</span> <span class="nf">mutate_pop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">manager</span><span class="p">:</span> <span class="n">PopulationManager</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PopulationManager</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot; Calls the mutate_individual function for each member of the population</span>
+<span class="sd">        Args:</span>
+<span class="sd">            manager: PopulationManager object holding the current population</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Modified PopulationManager object&quot;&quot;&quot;</span>
+        <span class="n">population</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_population</span><span class="p">()</span>
+        <span class="n">new_freshness</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_freshness</span><span class="p">()</span>
+
+        <span class="n">to_mutate</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_to_mutate</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">individual_idx</span> <span class="ow">in</span> <span class="n">to_mutate</span><span class="p">:</span>
+            <span class="n">population</span><span class="p">[</span><span class="n">individual_idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mutate_individual</span><span class="p">(</span><span class="n">population</span><span class="p">[</span><span class="n">individual_idx</span><span class="p">])</span>
+            <span class="n">new_freshness</span><span class="p">[</span><span class="n">individual_idx</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">manager</span><span class="o">.</span><span class="n">update_population</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">new_freshness</span><span class="p">)</span>
+        <span class="c1"># in case we need to enforce parameter value bounds on the freshly mutated samples. Since it only applies to</span>
+        <span class="c1"># mutated samples we don&#39;t have to update the freshness</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">apply_bounds</span><span class="p">(</span><span class="n">to_mutate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">manager</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

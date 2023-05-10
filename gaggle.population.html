@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Population &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Base_individuals" href="gaggle.population.base_individuals.html" />
+    <link rel="prev" title="Base_selections" href="gaggle.operators.selection.base_selections.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.html">Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Population</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.population.base_individuals.html">Base_individuals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.population.individual">Individual</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.population.individual.Individual"><code class="docutils literal notranslate"><span class="pre">Individual</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.population.individual_factory">Individual_factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.population.individual_factory.IndividualFactory"><code class="docutils literal notranslate"><span class="pre">IndividualFactory</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.population.population_manager">Population_manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.population.population_manager.PopulationManager"><code class="docutils literal notranslate"><span class="pre">PopulationManager</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+      <li class="breadcrumb-item active">Population</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.population.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="population">
+<h1>Population<a class="headerlink" href="#population" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.population.base_individuals.html">Base_individuals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.base_individuals.html#module-gaggle.population.base_individuals.nn_individual">Nn_individual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.base_individuals.html#module-gaggle.population.base_individuals.numpy_individual">Numpy_individual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.base_individuals.html#module-gaggle.population.base_individuals.pytorch_individual">Pytorch_individual</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.base_individuals.html#module-gaggle.population.base_individuals.rl_individual">Rl_individual</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="module-gaggle.population.individual">
+<span id="individual"></span><h2>Individual<a class="headerlink" href="#module-gaggle.population.individual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.individual.</span></span><span class="sig-name descname"><span class="pre">Individual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>An object that stores a single candidate solution to the given problem (aka a chromosome).
+This is the parent class for any other individual type.
+The gene_pool field stores the entire chromosome formatted as pytorch model parameters.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.CONFIG_GENE_POOL">
+<span class="sig-name descname"><span class="pre">CONFIG_GENE_POOL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gene_pool_config'</span></em><a class="headerlink" href="#gaggle.population.individual.Individual.CONFIG_GENE_POOL" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.CONFIG_INDIVIDUAL_ARGS">
+<span class="sig-name descname"><span class="pre">CONFIG_INDIVIDUAL_ARGS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'individual_args_config'</span></em><a class="headerlink" href="#gaggle.population.individual.Individual.CONFIG_INDIVIDUAL_ARGS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.apply_bounds">
+<span class="sig-name descname"><span class="pre">apply_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.apply_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.apply_bounds" title="Permalink to this definition"></a></dt>
+<dd><p>Apply parameter bounds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lower_bound</strong> – </p></li>
+<li><p><strong>upper_bound</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.clip">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_bound</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.clip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.clip" title="Permalink to this definition"></a></dt>
+<dd><p>torch.clip wrapper in case the individual created does not use a type support by torch.clip. If that is the
+case, the individual can overwrite this clip method to the desired behavior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tensor</strong> – torch tensor to clip</p></li>
+<li><p><strong>lower_bound</strong> – min value</p></li>
+<li><p><strong>upper_bound</strong> – max value</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.forward" title="Permalink to this definition"></a></dt>
+<dd><p>By default we returned a flattened tensor of the model parameters.</p>
+<p class="rubric">Notes</p>
+<p>We do not return the metadata that can be used to reconstruct the gene_pool dictionary as this should
+not be used to modify the parameters directly (the tensor does not link back to the parameters).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A flattened pytorch tensor of length self.genome_size.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.generate_gene_pool">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_gene_pool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'torch.nn.parameter.Parameter'&gt;,</span> <span class="pre">None),</span> <span class="pre">slice(&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">None)],</span> <span class="pre">None)]</span></span></span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.generate_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.generate_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>Should return a dictionary of dictionaries where the inner dictionary has a “param” and a “size” key
+for each of the nn.Parameters in the dictionary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.get_gene_pool">
+<span class="sig-name descname"><span class="pre">get_gene_pool</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.get_gene_pool"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.get_gene_pool" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the gene pool of the individual if it already exists, otherwise generates it then returns it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The individual’s gene pool as a dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.get_genome_size">
+<span class="sig-name descname"><span class="pre">get_genome_size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.get_genome_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.get_genome_size" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the genome size of the individual if it already exists, otherwise generates it then returns it.
+If the gene pool has not been generated when this is called, it will generate it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The individual’s genome size as an int.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Module</span></span></span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Represents the initialization rule for an individual. It should modify the gene pool.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual.Individual.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.outdir_args.OutdirArgs" title="gaggle.arguments.outdir_args.OutdirArgs"><span class="pre">OutdirArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/gaggle/population/individual.html#Individual.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual.Individual.save" title="Permalink to this definition"></a></dt>
+<dd><p>Saves the individual to a file in the path provided by outdir_args.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outdir_args</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.population.individual_factory">
+<span id="individual-factory"></span><h2>Individual_factory<a class="headerlink" href="#module-gaggle.population.individual_factory" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.individual_factory.IndividualFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.individual_factory.</span></span><span class="sig-name descname"><span class="pre">IndividualFactory</span></span><a class="reference internal" href="_modules/gaggle/population/individual_factory.html#IndividualFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual_factory.IndividualFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Factory that generates pre-existing available Individuals.
+IndividualFactory.individuals stores said Individuals as a dictionary with their name as key
+and the uninitialized Individual object as value.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual_factory.IndividualFactory.from_individual_args">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_individual_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual_factory.html#IndividualFactory.from_individual_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual_factory.IndividualFactory.from_individual_args" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the requested Individual from the dictionary of available Individuals.</p>
+<p>This is done by using the attribute individual_args.individual_name as
+the lookup key to IndividualFactory.individuals.
+:param individual_args:
+:param sys_args:
+:param *args:
+:param **kwargs:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Initialized Individual object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.population.individual_factory.IndividualFactory.individuals">
+<span class="sig-name descname"><span class="pre">individuals</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'nn':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.population.base_individuals.nn_individual.NNIndividual'&gt;,</span> <span class="pre">'numpy':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.population.base_individuals.numpy_individual.NumpyIndividual'&gt;,</span> <span class="pre">'pytorch':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.population.base_individuals.pytorch_individual.PytorchIndividual'&gt;,</span> <span class="pre">'rl':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.population.base_individuals.rl_individual.RLIndividual'&gt;}</span></em><a class="headerlink" href="#gaggle.population.individual_factory.IndividualFactory.individuals" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.individual_factory.IndividualFactory.update">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/individual_factory.html#IndividualFactory.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.individual_factory.IndividualFactory.update" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new Individual to the dictionary of Individuals that can be created.</p>
+<p>It is added to IndidividualFactory.individuals</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – dataset name that will be used as the dictionary lookup key</p></li>
+<li><p><strong>individual</strong> – Individual class object, it needs to not be already initialized</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.population.population_manager">
+<span id="population-manager"></span><h2>Population_manager<a class="headerlink" href="#module-gaggle.population.population_manager" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.population.population_manager.</span></span><span class="sig-name descname"><span class="pre">PopulationManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ga_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs" title="gaggle.arguments.ga_args.GAArgs"><span class="pre">GAArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">individual_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.individual_args.IndividualArgs" title="gaggle.arguments.individual_args.IndividualArgs"><span class="pre">IndividualArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><span class="pre">Individual</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Stores and manages all the individuals keeping track of their fitness.
+To avoid wasteful computation, we optionally keep track of an individual’s freshness and only
+recompute its fitness if it was modified since its fitness was last computed.</p>
+<p>The Population Manager also provides a standardized interface for the evolutionary operators to access and update
+individuals. It stores all the individual-related meta-information required for the operators, such as which
+parents have been chosen, which individuals will be crossed over etc. This simplifies the operator pipeline by
+avoiding the need for operators to interface with each other directly.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.apply_bounds">
+<span class="sig-name descname"><span class="pre">apply_bounds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.apply_bounds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.apply_bounds" title="Permalink to this definition"></a></dt>
+<dd><p>Applies the parameter value bounds if they were set to a value other than None in the individual_args.
+This calls each individual’s own apply_bounds with the lower and upper bound.
+:param ids: list of ids of the individuals to which this needs to be applied</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.create_buffer">
+<span class="sig-name descname"><span class="pre">create_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.create_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.create_buffer" title="Permalink to this definition"></a></dt>
+<dd><p>Wrapper that allows for storage of custom buffers. This can be used to store meta-data when building custom
+operators that need to communicate with one-another.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – unique key associated with the buffer that will serve as lookup</p></li>
+<li><p><strong>initial_value</strong> – initial value of the buffer, can be anything</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.eval">
+<span class="sig-name descname"><span class="pre">eval</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.eval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.eval" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the individuals to evaluation mode. Is used if individuals have evaluation specific configurations.</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_buffer">
+<span class="sig-name descname"><span class="pre">get_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_buffer" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a buffer associated with the key key that was created using self.create_buffer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_fitness">
+<span class="sig-name descname"><span class="pre">get_fitness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_fitness" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_freshness">
+<span class="sig-name descname"><span class="pre">get_freshness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_freshness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_freshness" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_gene_count">
+<span class="sig-name descname"><span class="pre">get_gene_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_gene_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_gene_count" title="Permalink to this definition"></a></dt>
+<dd><p>Assuming all individuals have the same genome size, returns the genome size of the first individual (which
+if the assumption holds should be the genome size of all individuals in the population.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Genome size as an int.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_individual">
+<span class="sig-name descname"><span class="pre">get_individual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_individual"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_individual" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_individual_fitness">
+<span class="sig-name descname"><span class="pre">get_individual_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_individual_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_individual_fitness" title="Permalink to this definition"></a></dt>
+<dd><p>Get an individual’s fitness</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>individual_id</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_mating_tuples">
+<span class="sig-name descname"><span class="pre">get_mating_tuples</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_mating_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_mating_tuples" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_num_protected">
+<span class="sig-name descname"><span class="pre">get_num_protected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_num_protected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_num_protected" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_parents">
+<span class="sig-name descname"><span class="pre">get_parents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_parents" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_population">
+<span class="sig-name descname"><span class="pre">get_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_population" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_protected">
+<span class="sig-name descname"><span class="pre">get_protected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_protected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_protected" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.get_to_mutate">
+<span class="sig-name descname"><span class="pre">get_to_mutate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.get_to_mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.get_to_mutate" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.is_fresh">
+<span class="sig-name descname"><span class="pre">is_fresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.is_fresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.is_fresh" title="Permalink to this definition"></a></dt>
+<dd><p>Check if an individual with id individual_id is fresh. Meaning whether its fitness needs to
+be recomputed or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>individual_id</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A boolean that reflects whether the individual’s fitness needs to be recomputed or</p>
+</dd>
+</dl>
+<p>not. True if it does, False otherwise</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.set_freshness">
+<span class="sig-name descname"><span class="pre">set_freshness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freshness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.set_freshness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.set_freshness" title="Permalink to this definition"></a></dt>
+<dd><p>Set an individual’s freshness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual_id</strong> – </p></li>
+<li><p><strong>freshness</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.set_individual_fitness">
+<span class="sig-name descname"><span class="pre">set_individual_fitness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fitness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.set_individual_fitness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.set_individual_fitness" title="Permalink to this definition"></a></dt>
+<dd><p>Set an individual’s fitness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual_id</strong> – </p></li>
+<li><p><strong>fitness</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.train"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.train" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the individuals to training mode. Is used if individuals have training specific configurations.</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_buffer">
+<span class="sig-name descname"><span class="pre">update_buffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_buffer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_buffer" title="Permalink to this definition"></a></dt>
+<dd><p>Sets the value of a buffer associated with key key that was created using self.create_buffer
+using new value new_value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – </p></li>
+<li><p><strong>new_value</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_mating_tuples">
+<span class="sig-name descname"><span class="pre">update_mating_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_tuples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_mating_tuples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_mating_tuples" title="Permalink to this definition"></a></dt>
+<dd><p>Update the list of mating tuples with a new list of mating tuples.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_tuples</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_parents">
+<span class="sig-name descname"><span class="pre">update_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_parents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_parents" title="Permalink to this definition"></a></dt>
+<dd><p>Update the list of parent ids with a new list of parent ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_parents</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_population">
+<span class="sig-name descname"><span class="pre">update_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">new_individuals:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.population.individual.Individual'&gt;,</span> <span class="pre">None)],</span> <span class="pre">new_freshness:</span> <span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">None)]</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_population" title="Permalink to this definition"></a></dt>
+<dd><p>Update the entire population as well as its freshness with new dictionaries of {id: Individual} and
+{id: bool}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_individuals</strong> – </p></li>
+<li><p><strong>new_freshness</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_protected">
+<span class="sig-name descname"><span class="pre">update_protected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_protected</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_protected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_protected" title="Permalink to this definition"></a></dt>
+<dd><p>Update the list of protected individual ids (individuals that will survive to the next generation no matter
+what, similar to elitism) with a new list of protected individual ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_protected</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.population.population_manager.PopulationManager.update_to_mutate">
+<span class="sig-name descname"><span class="pre">update_to_mutate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_to_mutate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/population/population_manager.html#PopulationManager.update_to_mutate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.population.population_manager.PopulationManager.update_to_mutate" title="Permalink to this definition"></a></dt>
+<dd><p>Update the list of individual ids that need to be mutated during the next call to a Mutation operator with a
+new list of individual ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_to_mutate</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.operators.selection.base_selections.html" class="btn btn-neutral float-left" title="Base_selections" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.population.base_individuals.html" class="btn btn-neutral float-right" title="Base_individuals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problem &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Base_problems" href="gaggle.problem.base_problems.html" />
+    <link rel="prev" title="Supervisor" href="gaggle.supervisor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Problem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.base_problems.html">Base_problems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.dataset.html">Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.environment.html">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.leap.html">Leap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Problem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.problem.problem.Problem"><code class="docutils literal notranslate"><span class="pre">Problem</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-gaggle.problem.problem_factory">Problem_factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gaggle.problem.problem_factory.ProblemFactory"><code class="docutils literal notranslate"><span class="pre">ProblemFactory</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+      <li class="breadcrumb-item active">Problem</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.problem.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="problem">
+<h1>Problem<a class="headerlink" href="#problem" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.problem.base_problems.html">Base_problems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.base_problems.html#module-gaggle.problem.base_problems.functional_problem">Functional_problem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.problem.dataset.html">Dataset</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.dataset.base_datasets.html">Base_datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.dataset.html#module-gaggle.problem.dataset.classification_problem">Classification_problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.dataset.html#id1">Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.dataset.html#module-gaggle.problem.dataset.dataset_factory">Dataset_factory</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.problem.environment.html">Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.environment.html#module-gaggle.problem.environment.environment_factory">Environment_factory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.environment.html#module-gaggle.problem.environment.rl_problem">Rl_problem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gaggle.problem.leap.html">Leap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.problem.leap.html#module-gaggle.problem.leap.leap_problem">Leap_problem</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h2>Problem<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<span class="target" id="module-gaggle.problem.problem"></span><dl class="py class">
+<dt class="sig sig-object py" id="gaggle.problem.problem.Problem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.problem.problem.</span></span><span class="sig-name descname"><span class="pre">Problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/problem.html#Problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem.Problem" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract Base Class used to define problem definitions.</p>
+<p>It is in charge of fitness evaluation for the problem to solve.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.problem.Problem.evaluate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><span class="pre">Individual</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/gaggle/problem/problem.html#Problem.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem.Problem.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluate the given individual based on this problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual</strong> – individual to be evaluated</p></li>
+<li><p><strong>train</strong> – whether this is a training or testing evaluation (matters for certain problems)</p></li>
+<li><p><strong>*args</strong> – additional args that would need to be passed to the individual forward function (call)</p></li>
+<li><p><strong>**kwargs</strong> – additional kwargs that would need to be passed to the individual forward function (call)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: a float representing the individual’s fitness</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.problem.Problem.evaluate_population">
+<span class="sig-name descname"><span class="pre">evaluate_population</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">population_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.population_manager.PopulationManager" title="gaggle.population.population_manager.PopulationManager"><span class="pre">PopulationManager</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_freshness</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict[slice(&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">None)]</span></span></span><a class="reference internal" href="_modules/gaggle/problem/problem.html#Problem.evaluate_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem.Problem.evaluate_population" title="Permalink to this definition"></a></dt>
+<dd><p>Default behavior for evaluating the entire population, to update if it is wanted to introduce parallelization
+or other behaviors.</p>
+<p>Any instance of evaluate_population should always:
+- update the population fitness in the population manager by calling
+population_manager.set_individual_fitness.
+- If freshness is being used, then it should set the population freshness in the population manager by calling
+population_manager.set_freshness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>population_manager</strong> – </p></li>
+<li><p><strong>use_freshness</strong> – </p></li>
+<li><p><strong>update_manager</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: the fitness dictionary of the population</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-gaggle.problem.problem_factory">
+<span id="problem-factory"></span><h2>Problem_factory<a class="headerlink" href="#module-gaggle.problem.problem_factory" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.problem.problem_factory.</span></span><span class="sig-name descname"><span class="pre">ProblemFactory</span></span><a class="reference internal" href="_modules/gaggle/problem/problem_factory.html#ProblemFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Factory that generates pre-existing available Problems.
+ProblemFactory.problems stores said Problems as a dictionary. It stores problems as 4 types: classification,
+rl, leap and custom. Each is a key that holds a dictionary of available problems/datasets/environments.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory.convert_and_register_leap_problem">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_and_register_leap_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">leap_problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/problem_factory.html#ProblemFactory.convert_and_register_leap_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory.convert_and_register_leap_problem" title="Permalink to this definition"></a></dt>
+<dd><p>Shortcut method that both converts the leap problem to our Problem class and registers it</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>problem_name</strong> – </p></li>
+<li><p><strong>leap_problem</strong> – </p></li>
+<li><p><strong>*args</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory.from_problem_args">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_problem_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#gaggle.problem.problem.Problem" title="gaggle.problem.problem.Problem"><span class="pre">Problem</span></a></span></span><a class="reference internal" href="_modules/gaggle/problem/problem_factory.html#ProblemFactory.from_problem_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory.from_problem_args" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes the requested Problem from the dictionary of available Problems.</p>
+<p>This is done by using the attributes problem_args.problem_type and problem_args.problem_name as
+the lookup keys to ProblemFactory.problems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>problem_args</strong> – </p></li>
+<li><p><strong>sys_args</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The initialized Problem requested.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory.problems">
+<span class="sig-name descname"><span class="pre">problems</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'classification':</span> <span class="pre">{'CIFAR10':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.problem.dataset.base_datasets.cifar10.CIFAR10'&gt;,</span> <span class="pre">'MNIST':</span> <span class="pre">&lt;class</span> <span class="pre">'gaggle.problem.dataset.base_datasets.mnist.MNIST'&gt;},</span> <span class="pre">'custom':</span> <span class="pre">{},</span> <span class="pre">'leap':</span> <span class="pre">{},</span> <span class="pre">'rl':</span> <span class="pre">{'cartpole':</span> <span class="pre">&lt;gaggle.problem.environment.environment_factory.GymWrapper</span> <span class="pre">object&gt;}}</span></em><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory.problems" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory.register_problem">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">register_problem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">problem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/problem_factory.html#ProblemFactory.register_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory.register_problem" title="Permalink to this definition"></a></dt>
+<dd><p>Register a new problem to the factory of pre-existing available Problems. Said problem has to be a problem
+that is registrable. ProblemFactory.registrable_problems stores the list of problem types that are allowed to
+be registrables. For the other types, please check their respective documentation to see how to register them
+(for classification: ClassificationProblem and DatasetFactory, for rl: RLProblem and EnvironmentFactory).</p>
+<p>If custom arguments need to be passed at initialization time of the Problem (for example when
+ProblemFactory.from_problem_args is called), they can also be passed as <a href="#id2"><span class="problematic" id="id3">*</span></a>args and <a href="#id4"><span class="problematic" id="id5">**</span></a>kwargs and they will be
+used to initialize the problem.
+:param problem_type: The key to ProblemFactory.problems.
+:param problem_name: The new problem’s name as a str.
+:param problem: The uninitialized problem.
+:param *args: The args that need to be passed to the problem at initialization time
+:param **kwargs: the kwargs that need to be passed to the problem at initialization time.</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.problem.problem_factory.ProblemFactory.registrable_problems">
+<span class="sig-name descname"><span class="pre">registrable_problems</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['leap',</span> <span class="pre">'custom']</span></em><a class="headerlink" href="#gaggle.problem.problem_factory.ProblemFactory.registrable_problems" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.supervisor.html" class="btn btn-neutral float-left" title="Supervisor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.problem.base_problems.html" class="btn btn-neutral float-right" title="Base_problems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

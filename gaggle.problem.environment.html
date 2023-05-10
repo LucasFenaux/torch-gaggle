@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Environment &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Leap" href="gaggle.problem.leap.html" />
+    <link rel="prev" title="Base_datasets" href="gaggle.problem.dataset.base_datasets.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="gaggle.html">Gaggle</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="gaggle.supervisor.html">Supervisor</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="gaggle.problem.html">Problem</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.base_problems.html">Base_problems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.dataset.html">Dataset</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.problem.environment.environment_factory">Environment_factory</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-gaggle.problem.environment.rl_problem">Rl_problem</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.leap.html">Leap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.html#id1">Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gaggle.problem.html#module-gaggle.problem.problem_factory">Problem_factory</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.ga.html">Ga</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.operators.html">Operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.population.html">Population</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.base_nns.html">Base_nns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.arguments.html">Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gaggle.utils.html">Utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="gaggle.html">Gaggle</a></li>
+          <li class="breadcrumb-item"><a href="gaggle.problem.html">Problem</a></li>
+      <li class="breadcrumb-item active">Environment</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/gaggle.problem.environment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="environment">
+<h1>Environment<a class="headerlink" href="#environment" title="Permalink to this heading"></a></h1>
+<section id="module-gaggle.problem.environment.environment_factory">
+<span id="environment-factory"></span><h2>Environment_factory<a class="headerlink" href="#module-gaggle.problem.environment.environment_factory" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.problem.environment.environment_factory.</span></span><span class="sig-name descname"><span class="pre">EnvironmentFactory</span></span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#EnvironmentFactory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Factory that generates available environments.
+EnvironmentFactory.environments stores said environments as a dictionary with their name as key and the
+uninitialized Environment object as value.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>Environment Class</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory.environments">
+<span class="sig-name descname"><span class="pre">environments</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'cartpole':</span> <span class="pre">&lt;gaggle.problem.environment.environment_factory.GymWrapper</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory.environments" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory.from_gym_env_id">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_gym_env_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#EnvironmentFactory.from_gym_env_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory.from_gym_env_id" title="Permalink to this definition"></a></dt>
+<dd><p>Takes in a gym env id and returns the associated OpenAI Gym Environment
+:param env_id: gym environment id</p>
+<p>Returns: Gym environment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory.from_problem_args">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_problem_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#EnvironmentFactory.from_problem_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory.from_problem_args" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory.get_keys">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#EnvironmentFactory.get_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory.get_keys" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the keys (environment names) for the available pre-built environment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of strings that are the keys to EnvironmentFactory.environments</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.EnvironmentFactory.update">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">environment</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#EnvironmentFactory.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.EnvironmentFactory.update" title="Permalink to this definition"></a></dt>
+<dd><p>Add a new dataset to the dictionary of datasets that can be created.</p>
+<p>It is added to EnvironmentFactory.environments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – dataset name that will be used as the dictionary lookup key</p></li>
+<li><p><strong>environment</strong> – environment class object, it needs to not be already initialized</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.problem.environment.environment_factory.GymWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.problem.environment.environment_factory.</span></span><span class="sig-name descname"><span class="pre">GymWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">environment_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/environment_factory.html#GymWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.environment_factory.GymWrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Callable wrapper that returns the gym environment</p>
+</dd></dl>
+
+</section>
+<section id="module-gaggle.problem.environment.rl_problem">
+<span id="rl-problem"></span><h2>Rl_problem<a class="headerlink" href="#module-gaggle.problem.environment.rl_problem" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="gaggle.problem.environment.rl_problem.RLProblem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">gaggle.problem.environment.rl_problem.</span></span><span class="sig-name descname"><span class="pre">RLProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">problem_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.problem_args.ProblemArgs" title="gaggle.arguments.problem_args.ProblemArgs"><span class="pre">ProblemArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sys_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.arguments.html#gaggle.arguments.sys_args.SysArgs" title="gaggle.arguments.sys_args.SysArgs"><span class="pre">SysArgs</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/gaggle/problem/environment/rl_problem.html#RLProblem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.rl_problem.RLProblem" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="gaggle.problem.html#gaggle.problem.problem.Problem" title="gaggle.problem.problem.Problem"><code class="xref py py-class docutils literal notranslate"><span class="pre">Problem</span></code></a></p>
+<p>Problem that uses a reinforcement learning environment as a fitness evaluation process. Used mainly
+for OpenAI gym environments but can be used for any environment that supports OpenAI Gym’s environment API.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gaggle.problem.environment.rl_problem.RLProblem.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">individual</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="gaggle.population.html#gaggle.population.individual.Individual" title="gaggle.population.individual.Individual"><span class="pre">Individual</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/gaggle/problem/environment/rl_problem.html#RLProblem.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gaggle.problem.environment.rl_problem.RLProblem.evaluate" title="Permalink to this definition"></a></dt>
+<dd><p>Evaluate the given individual based on this problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>individual</strong> – individual to be evaluated</p></li>
+<li><p><strong>train</strong> – whether this is a training or testing evaluation (matters for certain problems)</p></li>
+<li><p><strong>*args</strong> – additional args that would need to be passed to the individual forward function (call)</p></li>
+<li><p><strong>**kwargs</strong> – additional kwargs that would need to be passed to the individual forward function (call)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns: a float representing the individual’s fitness</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gaggle.problem.dataset.base_datasets.html" class="btn btn-neutral float-left" title="Base_datasets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gaggle.problem.leap.html" class="btn btn-neutral float-right" title="Leap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

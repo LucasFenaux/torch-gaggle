@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.supervisor.ga_supervisor &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.supervisor.ga_supervisor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.supervisor.ga_supervisor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">gaggle.arguments</span> <span class="kn">import</span> <span class="n">ConfigArgs</span><span class="p">,</span> <span class="n">ProblemArgs</span><span class="p">,</span> <span class="n">SysArgs</span><span class="p">,</span> <span class="n">GAArgs</span><span class="p">,</span> <span class="n">IndividualArgs</span><span class="p">,</span> <span class="n">OutdirArgs</span>
+<span class="kn">from</span> <span class="nn">gaggle.population</span> <span class="kn">import</span> <span class="n">PopulationManager</span>
+<span class="kn">from</span> <span class="nn">gaggle.ga</span> <span class="kn">import</span> <span class="n">GAFactory</span><span class="p">,</span> <span class="n">GA</span>
+<span class="kn">from</span> <span class="nn">gaggle.utils.special_print</span> <span class="kn">import</span> <span class="n">print_warning</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">gaggle.problem</span> <span class="kn">import</span> <span class="n">FunctionalProblem</span>
+
+
+<div class="viewcode-block" id="GASupervisor"><a class="viewcode-back" href="../../../gaggle.supervisor.html#gaggle.supervisor.ga_supervisor.GASupervisor">[docs]</a><span class="k">class</span> <span class="nc">GASupervisor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gives a single-line interface to our framework. At minimum,</span>
+<span class="sd">       a user needs to specify which problem they want to solve.</span>
+<span class="sd">       Also allows for customization by passing functions or new operators.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ga_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">num_parents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+                 <span class="n">generations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">problem_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MNIST&quot;</span><span class="p">,</span> <span class="n">individual_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;nn&quot;</span><span class="p">,</span>
+                 <span class="n">individual_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">device</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">elitism</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">crossover</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;uniform&quot;</span><span class="p">,</span>
+                 <span class="n">k_point</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">tournament_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">selection_pressure</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">mutation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+                 <span class="n">mutation_chance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">mutation_std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">use_freshness</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+                 <span class="n">mutate_protected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">uniform_mutation_min_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span>
+                 <span class="n">uniform_mutation_max_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">selection</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;weighted&quot;</span><span class="p">,</span> <span class="n">parent_survival_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">eval_batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">save_best_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">eval_every_generation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;lenet&quot;</span><span class="p">,</span> <span class="n">root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;./runs&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;run&quot;</span><span class="p">,</span>
+                 <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1337</span><span class="p">,</span> <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dataset_root</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">gui</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">display_train_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">display_test_metrics</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the GASupervisor..</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ga_name: name of the overall GA to use.</span>
+<span class="sd">            population_size: number of individuals in the population to evolve.</span>
+<span class="sd">            num_parents: num parents selected during the selection process (recommended value is = population_size).</span>
+<span class="sd">            generations: number of generations.</span>
+<span class="sd">            problem_name: name of the problem, if custom, set_custom_fitness needs to be called to setup the custom</span>
+<span class="sd">            fitness formula.</span>
+<span class="sd">            individual_name: the type of individual to use to represent the solutions to evolve.</span>
+<span class="sd">            individual_size: length of the parameter tensor for the basic NumpyIndividual and PytorchIndividual.</span>
+<span class="sd">            This argument is irrelevant for other individuals (unless is has been customized).</span>
+<span class="sd">            device: device to run algorithms on. Can be a torch.device object or a str (&quot;cpu&quot; or &quot;cuda&quot;).</span>
+<span class="sd">            elitism: % of top models (rounded down) that always gets to survive to the next generation.</span>
+<span class="sd">            crossover: type of crossover to use.</span>
+<span class="sd">            k_point: number of points for k-point-crossover.</span>
+<span class="sd">            tournament_size: number of participants per tournament in tournament_selection.</span>
+<span class="sd">            selection_pressure: probability used when performing tournament selection, represents the likelihood of</span>
+<span class="sd">            selecting the best performer.</span>
+<span class="sd">            mutation: type of mutation to use.</span>
+<span class="sd">            mutation_chance: per gene probability that a gene will be mutated.</span>
+<span class="sd">            mutation_std: standard deviation when using normal-based random mutation.</span>
+<span class="sd">            use_freshness: whether to use freshness to not recompute the fitness of surviving members that have not</span>
+<span class="sd">            been modified from a generation to the next.</span>
+<span class="sd">            mutate_protected: whether to mutate the protected individuals that are selected to survive (elitism).</span>
+<span class="sd">            uniform_mutation_min_val: minimum value when sampling mutations values in uniform mutation.</span>
+<span class="sd">            uniform_mutation_max_val: maximum value when sampling mutations values in uniform mutation.</span>
+<span class="sd">            selection: type of selection to use.</span>
+<span class="sd">            parent_survival_rate: (aka probability of crossover) probability to keep the parents rather than the children for crossover.</span>
+<span class="sd">            batch_size: batch size for training. Only relevant for classification and other dataset-based problems.</span>
+<span class="sd">            eval_batch_size: batch size for inference. Only relevant for classification and other dataset-based</span>
+<span class="sd">            problems.</span>
+<span class="sd">            save_best_every: save best performer in the population every this many generations.</span>
+<span class="sd">            eval_every_generation: evaluate the population pool on the test set after this many generations.</span>
+<span class="sd">            model_name: name of the model architecture. Only relevant for neural network individuals.</span>
+<span class="sd">            root: Root folder where to put the experiments (good choice can be f&#39;{os.getcwd()}/experiments&#39;).</span>
+<span class="sd">            name: Name of each experiment folder.</span>
+<span class="sd">            seed: seed to fix randomness.</span>
+<span class="sd">            steps: number of steps to take in the environment for a single run. Only relevant for rl problems.</span>
+<span class="sd">            runs: number of runs per evaluation. Only relevant for rl problems.</span>
+<span class="sd">            dataset_root: path to the data on the local storage. Only relevant for classification and other</span>
+<span class="sd">            dataset-based problems.</span>
+<span class="sd">            gui: if the environment has a gui, display it if True. Only relevant for rl problems with a gui (OpenAI Gym problems).</span>
+<span class="sd">            display_train_metrics: whether to draw a graph with the train metrics at the end of training, needs at</span>
+<span class="sd">             least 11 generations of training as the default window size is 10.</span>
+<span class="sd">            display_test_metrics: whether to draw a graph with the train metrics at the end of training, needs</span>
+<span class="sd">            number of generation / eval_every_generation &gt; 10 to draw anything since the default window size is 10.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_args</span> <span class="o">=</span> <span class="n">ConfigArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span> <span class="o">=</span> <span class="n">ProblemArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span> <span class="o">=</span> <span class="n">SysArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span> <span class="o">=</span> <span class="n">GAArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span> <span class="o">=</span> <span class="n">IndividualArgs</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span> <span class="o">=</span> <span class="n">OutdirArgs</span><span class="p">()</span>
+        <span class="c1"># replace the init arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">ga_name</span> <span class="o">=</span> <span class="n">ga_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">population_size</span> <span class="o">=</span> <span class="n">population_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">num_parents</span> <span class="o">=</span> <span class="n">num_parents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">generations</span> <span class="o">=</span> <span class="n">generations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span> <span class="o">=</span> <span class="n">problem_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">dataset_root</span> <span class="o">=</span> <span class="n">dataset_root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">steps</span> <span class="o">=</span> <span class="n">steps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">runs</span> <span class="o">=</span> <span class="n">runs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">gui</span> <span class="o">=</span> <span class="n">gui</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">crossover</span> <span class="o">=</span> <span class="n">crossover</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">k_point</span> <span class="o">=</span> <span class="n">k_point</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">tournament_size</span> <span class="o">=</span> <span class="n">tournament_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">selection_pressure</span> <span class="o">=</span> <span class="n">selection_pressure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">elitism</span> <span class="o">=</span> <span class="n">elitism</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">mutation</span> <span class="o">=</span> <span class="n">mutation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">mutate_protected</span> <span class="o">=</span> <span class="n">mutate_protected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">mutation_chance</span> <span class="o">=</span> <span class="n">mutation_chance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">mutation_std</span> <span class="o">=</span> <span class="n">mutation_std</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">uniform_mutation_min_val</span> <span class="o">=</span> <span class="n">uniform_mutation_min_val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">uniform_mutation_max_val</span> <span class="o">=</span> <span class="n">uniform_mutation_max_val</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="n">selection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">parent_survival_rate</span> <span class="o">=</span> <span class="n">parent_survival_rate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">eval_batch_size</span> <span class="o">=</span> <span class="n">eval_batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">save_best_every</span> <span class="o">=</span> <span class="n">save_best_every</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">eval_every_generation</span> <span class="o">=</span> <span class="n">eval_every_generation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="o">.</span><span class="n">use_freshness</span> <span class="o">=</span> <span class="n">use_freshness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">model_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">individual_name</span> <span class="o">=</span> <span class="n">individual_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="o">.</span><span class="n">individual_size</span> <span class="o">=</span> <span class="n">individual_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_fitness_function</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_train_metrics</span> <span class="o">=</span> <span class="n">display_train_metrics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">display_test_metrics</span> <span class="o">=</span> <span class="n">display_test_metrics</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="GASupervisor.set_custom_fitness"><a class="viewcode-back" href="../../../gaggle.supervisor.html#gaggle.supervisor.ga_supervisor.GASupervisor.set_custom_fitness">[docs]</a>    <span class="k">def</span> <span class="nf">set_custom_fitness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fitness_function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;If during initialization, problem_name is set to &quot;custom&quot;, then this function needs to be called to</span>
+<span class="sd">        setup the fitness function to evaluate the population on before calling self.run(). This takes in any callable</span>
+<span class="sd">        that will return a float value of the individual. If custom arguments are necessary, they can be passed</span>
+<span class="sd">        as *args and **kwargs and will be used when invoking the fitness_function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            fitness_function: fitness function to optimize</span>
+<span class="sd">            *args:</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_fitness_function</span> <span class="o">=</span> <span class="n">fitness_function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></div>
+
+    <span class="k">def</span> <span class="nf">_run_default</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run script for default parameters and default fitness function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args:</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">population_manager</span><span class="p">:</span> <span class="n">PopulationManager</span> <span class="o">=</span> <span class="n">PopulationManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="p">,</span>
+                                                                  <span class="n">sys_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">GA</span> <span class="o">=</span> <span class="n">GAFactory</span><span class="o">.</span><span class="n">from_ga_args</span><span class="p">(</span><span class="n">population_manager</span><span class="o">=</span><span class="n">population_manager</span><span class="p">,</span> <span class="n">ga_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">,</span>
+                                             <span class="n">problem_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">sys_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span>
+                                             <span class="n">outdir_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="p">,</span> <span class="n">individual_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="p">)</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">display_train_metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_train_metrics</span><span class="p">,</span> <span class="n">display_test_metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_test_metrics</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_run_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run script for a custom fitness function.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_fitness_function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">print_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempted to run a custom fitness function but the fitness function was not set&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># we first initialize the population</span>
+        <span class="n">population_manager</span><span class="p">:</span> <span class="n">PopulationManager</span> <span class="o">=</span> <span class="n">PopulationManager</span><span class="p">(</span><span class="n">ga_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">,</span>
+                                                                  <span class="n">individual_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="p">,</span>
+                                                                  <span class="n">sys_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># we then define the problem</span>
+        <span class="n">problem</span> <span class="o">=</span> <span class="n">FunctionalProblem</span><span class="p">(</span><span class="n">fitness_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_fitness_function</span><span class="p">,</span> <span class="n">problem_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="p">,</span>
+                                    <span class="n">sys_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">trainer</span><span class="p">:</span> <span class="n">GA</span> <span class="o">=</span> <span class="n">GAFactory</span><span class="o">.</span><span class="n">from_ga_args</span><span class="p">(</span><span class="n">population_manager</span><span class="o">=</span><span class="n">population_manager</span><span class="p">,</span> <span class="n">problem</span><span class="o">=</span><span class="n">problem</span><span class="p">,</span>
+                                             <span class="n">ga_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ga_args</span><span class="p">,</span>
+                                             <span class="n">problem_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="p">,</span> <span class="n">sys_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sys_args</span><span class="p">,</span>
+                                             <span class="n">outdir_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">outdir_args</span><span class="p">,</span> <span class="n">individual_args</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">individual_args</span><span class="p">)</span>
+        <span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">display_train_metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_train_metrics</span><span class="p">,</span> <span class="n">display_test_metrics</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">display_test_metrics</span><span class="p">)</span>
+
+<div class="viewcode-block" id="GASupervisor.run"><a class="viewcode-back" href="../../../gaggle.supervisor.html#gaggle.supervisor.ga_supervisor.GASupervisor.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the genetic algorithm described during __init__. When running pre-existing problems, if additional</span>
+<span class="sd">        parameters need to be passed to the initialization of the PopulationManager, they can be given in *args and</span>
+<span class="sd">        **kwargs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            *args:</span>
+<span class="sd">            **kwargs:</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem_args</span><span class="o">.</span><span class="n">problem_name</span> <span class="o">!=</span> <span class="s2">&quot;custom&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_default</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_run_custom</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>gaggle.arguments.ga_args &mdash; gaggle 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            gaggle
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gaggle.html">Gaggle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">gaggle</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">gaggle.arguments.ga_args</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for gaggle.arguments.ga_args</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+
+
+<div class="viewcode-block" id="GAArgs"><a class="viewcode-back" href="../../../gaggle.arguments.html#gaggle.arguments.ga_args.GAArgs">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">GAArgs</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Argument class that contains the arguments relating to the GA algorithms &quot;&quot;&quot;</span>
+
+    <span class="n">CONFIG_KEY</span> <span class="o">=</span> <span class="s2">&quot;ga_args&quot;</span>
+
+    <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;number of individuals in the population to evolve.&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">crossover</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;type of crossover to use&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="n">parent_survival_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;probability to keep the parents rather than the children for crossover.&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">mutate_protected</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;whether to mutate the protected individuals that are selected to survive (elitism).&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">mutation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;normal&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;type of mutation to use&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="n">mutation_std</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;standard deviation when using normal-based random mutation&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">mutation_chance</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;per gene probability that a gene will be mutated.&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">selection</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;type of selection to use&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="n">elitism</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">% o</span><span class="s2">f top models (rounded down) that always get to survive to the next generation.&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">num_parents</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;num parents selected during the selection process&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">ga_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;name of the overall GA to use&quot;</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="n">generations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;number of generations&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">k_point</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;number of points for k-point-crossover &quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">tournament_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;number of participants per tournament in tournament_selection&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">selection_pressure</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;probability used when performing tournament selection, represents the likelihood of selecting the best&quot;</span>
+                <span class="s2">&quot;performer&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">uniform_mutation_min_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;minimum value when sampling mutations values in uniform mutation&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">uniform_mutation_max_val</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;maximum value when sampling mutations values in uniform mutation&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">save_best_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;save best performer in the population every this many generations.&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">save_every_epoch</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;force save after every epoch, independent of improvement. &quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">eval_every_generation</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;evaluate the population pool on the test set after this many generations&quot;</span>
+    <span class="p">})</span>
+
+    <span class="n">use_freshness</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;help&quot;</span><span class="p">:</span> <span class="s2">&quot;whether to use freshness to not recompute the fitness of surviving members that have not been modified&quot;</span>
+                <span class="s2">&quot;from a generation to the next&quot;</span>
+    <span class="p">})</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lucas Fenaux, Thomas Humphries.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
