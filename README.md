@@ -1,4 +1,8 @@
 # Gaggle
+
+[Documentation](https://lucasfenaux.github.io/torch-gaggle/index.html)
+[Pypi](https://pypi.org/project/torch-gaggle/)
+
 Genetic Algorithms on the GPU
 
 This is the version of gaggle used for the experiments in the paper: Gaggle: Genetic Algorithms on the GPU using 
