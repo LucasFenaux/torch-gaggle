@@ -13,7 +13,7 @@ jobs:
           pip install sphinx sphinx_rtd_theme torch-gaggle
       - name: Sphinx build
         run: |
-          cd docs; make clean; make html
+          cd docs; make clean; make html; cd ..
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
