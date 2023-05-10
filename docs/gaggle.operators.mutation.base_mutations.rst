@@ -12,7 +12,7 @@ Normal\_mutation
 Base\_mutations.uniform
 --------------------------------------------------------
 
-.. automodule:: gaggle.operators.mutation.base_mutations.uniform
+.. automodule:: gaggle.operators.mutation.base_mutations.uniform_mutation
    :members:
    :undoc-members:
    :show-inheritance:

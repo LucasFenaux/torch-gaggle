@@ -12,7 +12,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'gaggle'
 copyright = '2023, Lucas Fenaux, Thomas Humphries'
 author = 'Lucas Fenaux, Thomas Humphries'
-release = '0.0.1'
+release = '0.0.2'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
