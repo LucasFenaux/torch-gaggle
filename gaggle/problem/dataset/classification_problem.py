@@ -73,14 +73,16 @@ class ClassificationProblem(Problem):
             targets = all_data[1][j * batch_size:(j + 1) * batch_size].to(self.sys_args.device)
             self.current_batch = (data, targets)
             for k in list(fitness.keys()):
-                fitness[k].update(self.evaluate(population_manager.get_individual(k), *args, **kwargs), n=batch_size)
+                fitness[k].update(self.evaluate(population_manager.get_individual(k), train=train, *args, **kwargs),
+                                  n=batch_size)
 
         if rest > 0:
             data = transforms(all_data[0][-rest:].to(self.sys_args.device))
             targets = all_data[1][-rest:].to(self.sys_args.device)
             self.current_batch = (data, targets)
             for l in list(fitness.keys()):
-                fitness[l].update(self.evaluate(population_manager.get_individual(l), *args, **kwargs), n=batch_size)
+                fitness[l].update(self.evaluate(population_manager.get_individual(l), train=train, *args, **kwargs),
+                                  n=batch_size)
 
         for m in list(fitness.keys()):
             fitness[m] = fitness[m].global_avg

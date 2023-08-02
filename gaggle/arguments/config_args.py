@@ -11,18 +11,6 @@ from gaggle.utils.special_print import print_warning
 import transformers
 
 
-def parse_args():
-    """Helper function that parses the argument classes into a list of initialized argument objects with the given
-    CLI argument values.
-
-    Returns:
-        Returns list of [OutdirArgs, SysArgs, IndividualArgs, GAArgs, ProblemArgs, ConfigArgs]
-    """
-    parser = transformers.HfArgumentParser((OutdirArgs, SysArgs, IndividualArgs, GAArgs, ProblemArgs,
-                                            ConfigArgs))
-    return parser.parse_args_into_dataclasses()
-
-
 @dataclass
 class ConfigArgs:
     """ Argument class that allows to combine all the other arguments together and read 
@@ -119,3 +107,33 @@ class ConfigArgs:
                 self.args_to_config[entry].__dict__[key] = value
         if len(keys_not_found) > 0:
             print_warning(f"Could not find these keys: {keys_not_found}. Make sure they exist.")
+
+
+def parse_args(outdir_args_cls=OutdirArgs, sys_args_cls=SysArgs, individual_args_cls=IndividualArgs,
+               ga_args_cls=GAArgs, problem_args_cls=ProblemArgs, config_args_cls=ConfigArgs):
+    """Helper function that parses the argument classes into a list of initialized argument objects with the given
+    CLI argument values.
+
+    Args:
+        outdir_args_cls: class that takes care of the Outdir args behavior (needs to be a subclass of OutdirArgs)
+        sys_args_cls: class that takes care of the Sys args behavior (needs to be a subclass of SysArgs)
+        individual_args_cls: class that takes care of the Individual args behavior (needs to be a subclass of
+        IndividualArgs)
+        ga_args_cls: class that takes care of the GA args behavior (needs to be a subclass of GAArgs)
+        problem_args_cls: class that takes care of the Problem args behavior (needs to be a subclass of ProblemArgs)
+        config_args_cls: class that takes care of the Config args behavior (needs to be a subclass of ConfigArgs)
+
+    Returns:
+        Returns list of [OutdirArgs, SysArgs, IndividualArgs, GAArgs, ProblemArgs, ConfigArgs]
+
+    """
+    assert issubclass(outdir_args_cls, OutdirArgs)
+    assert issubclass(sys_args_cls, SysArgs)
+    assert issubclass(individual_args_cls, IndividualArgs)
+    assert issubclass(ga_args_cls, GAArgs)
+    assert issubclass(problem_args_cls, ProblemArgs)
+    assert issubclass(config_args_cls, ConfigArgs)
+
+    parser = transformers.HfArgumentParser((outdir_args_cls, sys_args_cls, individual_args_cls,
+                                            problem_args_cls, ga_args_cls, config_args_cls))
+    return parser.parse_args_into_dataclasses()

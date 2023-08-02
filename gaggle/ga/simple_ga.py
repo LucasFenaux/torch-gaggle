@@ -63,7 +63,7 @@ class SimpleGA(GA):
             }
             fn = os.path.join(self.outdir_args.create_folder_name(), f"best.pt")
             torch.save(data, fn)
-            print_highlighted(f"New best: {fitness:.2f}%>{self.best:.2f}%. Saved at '{os.path.abspath(fn)}'")
+            print_highlighted(f"New best: {fitness:.2f}>{self.best:.2f}. Saved at '{os.path.abspath(fn)}'")
             self.best = fitness
 
     @torch.no_grad()
@@ -131,7 +131,7 @@ class SimpleGA(GA):
             fn = os.path.join(self.outdir_args.create_folder_name(), f"training_metrics.png")
             plt.legend()
             plt.savefig(fn)
-            plt.show()
+            plt.show(block=False)
 
         if display_test:
             plt.figure()
@@ -150,7 +150,7 @@ class SimpleGA(GA):
             fn = os.path.join(self.outdir_args.create_folder_name(), f"testing_metrics.png")
             plt.legend()
             plt.savefig(fn)
-            plt.show()
+            plt.show(block=False)
 
     def save_metrics(self, save_train: bool = True, save_test: bool = True):
         """Saves the metrics computed and stored in self.saved_metrics. The metrics are saved to files in the output
@@ -188,7 +188,7 @@ class SimpleGA(GA):
         test_fitness = self.problem.evaluate_population(self.population_manager, use_freshness=False, update_manager=False,
                                                         train=False)
         test_metrics = self.get_fitness_metric(test_fitness, save=save, mode="eval")
-        if self.outdir_args is not None:
+        if self.outdir_args is not None and save:
             self.save_individual(self.population_manager.get_individual(test_metrics["best"][0]), test_metrics["best"][1])
 
         test_metrics["time_taken"] = time.time() - start_time

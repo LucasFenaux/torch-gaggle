@@ -174,6 +174,9 @@ class PopulationManager:
     def get_fitness(self):
         return self.fitness
 
+    def set_fitness(self, fitness: dict[int: float]):
+        self.fitness = fitness
+
     def get_individual(self, individual_idx: int):
         return self.population[individual_idx]
 
@@ -257,6 +260,8 @@ class PopulationManager:
         """
         self.population = new_individuals
         self.fresh = new_freshness
+        # we update the size of the population in case it changed
+        self.population_size = len(list(self.population.keys()))
 
     def get_gene_count(self):
         """Assuming all individuals have the same genome size, returns the genome size of the first individual (which

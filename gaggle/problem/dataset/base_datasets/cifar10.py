@@ -19,6 +19,9 @@ class CIFAR10(Dataset):
         self.dataset = torchvision.datasets.CIFAR10(root=global_configs.CACHE_DIR, download=True, train=train, transform=None)
         self.idx = list(range(len(self.dataset)))
 
+        self.real_normalize_transform = transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
+        self.normalize_transform = self.real_normalize_transform
+
         max_size = self.problem_args.max_size_train if train else self.problem_args.max_size_val
         if max_size is not None:
             self.idx = np.random.choice(self.idx, max_size)
@@ -38,11 +41,9 @@ class CIFAR10(Dataset):
                 transforms.RandomCrop(32, padding=4),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
-                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
             ])
         else:
             transform = transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
             ])
         return transform

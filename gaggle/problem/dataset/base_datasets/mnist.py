@@ -19,6 +19,9 @@ class MNIST(Dataset):
         self.dataset = torchvision.datasets.MNIST(root=global_configs.CACHE_DIR, download=True, train=train, transform=None)
         self.idx = list(range(len(self.dataset)))
 
+        self.real_normalize_transform = transforms.Normalize((0.1307,), (0.3081,))
+        self.normalize_transform = self.real_normalize_transform
+
         max_size = self.problem_args.max_size_train if train else self.problem_args.max_size_val
         if max_size is not None:
             self.idx = np.random.choice(self.idx, max_size)
@@ -38,12 +41,10 @@ class MNIST(Dataset):
             transform = transforms.Compose([
                 transforms.Resize((32, 32)),
                 transforms.ToTensor(),
-                transforms.Normalize((0.1307,), (0.3081,)),
             ])
         else:
             transform = transforms.Compose([
                 transforms.Resize((32, 32)),
                 transforms.ToTensor(),
-                transforms.Normalize((0.1307,), (0.3081,)),
             ])
         return transform

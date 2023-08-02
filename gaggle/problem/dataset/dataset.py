@@ -82,6 +82,8 @@ class Dataset(torch.utils.data.Dataset, ABC):
             if isinstance(transform, torchvision.transforms.ToTensor):
                 continue
             new_transforms.append(transform)
+        # we re-include the normalization transform
+        new_transforms.append(self.normalize_transform)
         out_transform.transforms = new_transforms
         data = self.get_data_and_targets()
         return data, out_transform
@@ -90,12 +92,17 @@ class Dataset(torch.utils.data.Dataset, ABC):
         """ Return the number of classes"""
         return len(self.classes)
 
+    def normalize(self, x: torch.Tensor) -> torch.Tensor:
+        """ Normalizes a tensor. Note: Tensors received from the dataset
+        are usually already normalized. """
+        return self.normalize_transform(x)
+
     def _build_transform(self) -> None:
         """ Internal function to build a default transformation. Override this
         if necessary. """
         transform = transforms.Compose([
             transforms.ToTensor(),
-            self.normalize_transform
+            # self.normalize_transform
         ])
         return transform
 
