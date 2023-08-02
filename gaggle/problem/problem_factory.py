@@ -21,15 +21,13 @@ class ProblemFactory:
         "custom": {}
     }
 
-    registrable_problems = ["leap", "custom"]
-
     @classmethod
     def register_problem(cls, problem_type: str, problem_name: str, problem: Callable, *args, **kwargs):
         """Register a new problem to the factory of pre-existing available Problems. Said problem has to be a problem
         that is registrable. ProblemFactory.registrable_problems stores the list of problem types that are allowed to
         be registrables. For the other types, please check their respective documentation to see how to register them
         (for classification: ClassificationProblem and DatasetFactory, for rl: RLProblem and EnvironmentFactory).
-        
+
         If custom arguments need to be passed at initialization time of the Problem (for example when
         ProblemFactory.from_problem_args is called), they can also be passed as *args and **kwargs and they will be
         used to initialize the problem.
@@ -44,24 +42,19 @@ class ProblemFactory:
 
         """
         assert isinstance(problem, Callable)
-        if problem_type not in cls.registrable_problems:
-            if problem_type == "classification":
-                print_warning(f"To register a new classification problem that has the same evaluate as "
-                              f"ClassificationProblem but a different dataset,"
-                              f" please use DatasetFactory.update with the updated dataset.\n"
-                              f"If the behavior is modified, then register the new problem as 'custom'")
-            elif problem_type == "rl":
-                print_warning(f"To register a new rl problem that has the same evaluate as RLProblem but a different "
-                              f"environment, please use EnvironmentFactory.update with the updated environment.\n"
-                              f"If the behavior is modified, then register the new problem as 'custom'")
-            else:
-                print(f"Can only register new {cls.registrable_problems} problems")
-                raise ValueError(problem_type)
-        else:
-            if problem_name in list(cls.problems[problem_type].keys()):
-                print_warning(f"{problem_name} is an already existing {problem_type} problem and will be overwritten")
+        if problem_type == "classification":
+            print_warning(f"To register a new classification problem that has the same evaluate as "
+                          f"ClassificationProblem but a different dataset,"
+                          f" please use DatasetFactory.update with the updated dataset.\n"
+                          f"If the behavior is modified, then register the new problem as 'custom'")
+        elif problem_type == "rl":
+            print_warning(f"To register a new rl problem that has the same evaluate as RLProblem but a different "
+                          f"environment, please use EnvironmentFactory.update with the updated environment.\n"
+                          f"If the behavior is modified, then register the new problem as 'custom'")
+        if problem_name in list(cls.problems[problem_type].keys()):
+            print_warning(f"{problem_name} is an already existing {problem_type} problem and will be overwritten")
 
-            cls.problems[problem_type][problem_name] = (problem, args, kwargs)
+        cls.problems[problem_type][problem_name] = (problem, args, kwargs)
 
     @classmethod
     def from_problem_args(cls, problem_args: ProblemArgs = None, sys_args: SysArgs = None) -> Problem:
@@ -80,13 +73,10 @@ class ProblemFactory:
         problem_args = problem_args if problem_args is not None else ProblemArgs()
         sys_args = SysArgs() if sys_args is None else sys_args
 
-        problem_type = None
-        for key, value in cls.problems.items():
-            if problem_args.problem_name in list(value.keys()):
-                problem_type = key
-                break
-        if problem_type is None:
-            raise ValueError(problem_args.problem_name)
+        problem_type = problem_args.problem_type
+        if problem_type not in cls.problems.keys():
+            raise ValueError(problem_args.problem_type)
+
         if problem_type == "classification":
             return ClassificationProblem(problem_args, sys_args)
         elif problem_type == "rl":

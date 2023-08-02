@@ -1,7 +1,8 @@
 from typing import Callable
 from dataclasses import dataclass, field
 
-from gaggle.base_nns.resnet_x import resnet20
+from gaggle.base_nns.resnet_x import resnet20, resnet32, resnet44, resnet56, resnet110, resnet1202
+from gaggle.base_nns.resnet import ResNet18, ResNet34, ResNet50, ResNet101, ResNet152
 from gaggle.base_nns.lenet import LeNet5
 from gaggle.base_nns.snet import SNetCIFAR, SNetMNIST
 from gaggle.base_nns.drqn import DRQN
@@ -63,11 +64,21 @@ class IndividualArgs:
 
     models = {
         "resnet20": resnet20,
+        "resnet32": resnet32,
+        "resnet44": resnet44,
+        "resnet56": resnet56,
+        "resnet110": resnet110,
+        "resnet1202": resnet1202,
         "lenet": LeNet5,
         "snet_cifar": SNetCIFAR,
         "snet_mnist": SNetMNIST,
         "drqn": DRQN,
-        "dqn": DQN
+        "dqn": DQN,
+        "resnet18": ResNet18,
+        "resnet34": ResNet34,
+        "resnet50": ResNet50,
+        "resnet101": ResNet101,
+        "resnet152": ResNet152
     }
 
     @classmethod

@@ -16,7 +16,8 @@ class MNIST(Dataset):
     """
     def __init__(self, problem_args: ProblemArgs = None, train: bool = True, sys_args: SysArgs = None):
         super().__init__(problem_args, train, sys_args)
-        self.dataset = torchvision.datasets.MNIST(root=global_configs.CACHE_DIR, download=True, train=train, transform=None)
+        self.dataset = torchvision.datasets.MNIST(root=global_configs.CACHE_DIR, download=True, train=train,
+                                                  transform=torchvision.transforms.ToTensor())
         self.idx = list(range(len(self.dataset)))
 
         self.real_normalize_transform = transforms.Normalize((0.1307,), (0.3081,))
@@ -30,21 +31,21 @@ class MNIST(Dataset):
         self.classes = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
 
     def get_data_and_targets(self):
-        if isinstance(self.dataset.data, torch.Tensor):
-            data = (self.dataset.data.to(torch.float), self.dataset.targets.to(torch.float))
-        else:
-            data = (torch.Tensor(self.dataset.data), torch.Tensor(self.dataset.targets))
-        return data
+        targets = []
+        images = []
+        for i in range(len(self.dataset)):
+            x, y = self.dataset[i]
+            images.append(x)
+            targets.append(y)
+        return torch.stack(images), torch.Tensor(targets)
 
     def _build_transform(self):
         if self.train:
             transform = transforms.Compose([
                 transforms.Resize((32, 32)),
-                transforms.ToTensor(),
             ])
         else:
             transform = transforms.Compose([
                 transforms.Resize((32, 32)),
-                transforms.ToTensor(),
             ])
         return transform

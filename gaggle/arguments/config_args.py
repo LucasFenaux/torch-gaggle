@@ -9,11 +9,12 @@ from gaggle.arguments.ga_args import GAArgs
 from gaggle.arguments.problem_args import ProblemArgs
 from gaggle.utils.special_print import print_warning
 import transformers
+from gaggle.other_args import OtherArgs
 
 
 @dataclass
 class ConfigArgs:
-    """ Argument class that allows to combine all the other arguments together and read 
+    """ Argument class that allows to combine all the other arguments together and read
     from config files for experiments"""
 
     config_path: str = field(default=None, metadata={
@@ -28,7 +29,8 @@ class ConfigArgs:
         IndividualArgs.CONFIG_KEY: IndividualArgs(),
         OutdirArgs.CONFIG_KEY: OutdirArgs(),
         GAArgs.CONFIG_KEY: GAArgs(),
-        ProblemArgs.CONFIG_KEY: ProblemArgs()
+        ProblemArgs.CONFIG_KEY: ProblemArgs(),
+        OtherArgs.CONFIG_KEY: OtherArgs()
     }
 
     @classmethod
@@ -42,7 +44,7 @@ class ConfigArgs:
 
     @classmethod
     def update(cls, config_key, arg_subclass):
-        r"""Add or replace one of the argument classes in the args_to_config that will 
+        r"""Add or replace one of the argument classes in the args_to_config that will
         be read in the *.yml file.
 
         Args:
@@ -72,7 +74,10 @@ class ConfigArgs:
 
     def get_args(self):
         return self.get_outdir_args(), self.get_sys_args(), self.get_individual_args(), self.get_problem_args(), \
-               self.get_ga_args()
+               self.get_ga_args(), self.get_other_args()
+
+    def get_other_args(self) -> OtherArgs:
+        return self.args_to_config[OtherArgs.CONFIG_KEY]
 
     def get_sys_args(self) -> SysArgs:
         return self.args_to_config[SysArgs.CONFIG_KEY]
@@ -110,7 +115,7 @@ class ConfigArgs:
 
 
 def parse_args(outdir_args_cls=OutdirArgs, sys_args_cls=SysArgs, individual_args_cls=IndividualArgs,
-               ga_args_cls=GAArgs, problem_args_cls=ProblemArgs, config_args_cls=ConfigArgs):
+               ga_args_cls=GAArgs, problem_args_cls=ProblemArgs, config_args_cls=ConfigArgs, other_args_cls=OtherArgs):
     """Helper function that parses the argument classes into a list of initialized argument objects with the given
     CLI argument values.
 
@@ -122,9 +127,10 @@ def parse_args(outdir_args_cls=OutdirArgs, sys_args_cls=SysArgs, individual_args
         ga_args_cls: class that takes care of the GA args behavior (needs to be a subclass of GAArgs)
         problem_args_cls: class that takes care of the Problem args behavior (needs to be a subclass of ProblemArgs)
         config_args_cls: class that takes care of the Config args behavior (needs to be a subclass of ConfigArgs)
+        other_args_cls: class that takes care of the Other args behavior (needs to be a subclass of OtherArgs)
 
     Returns:
-        Returns list of [OutdirArgs, SysArgs, IndividualArgs, GAArgs, ProblemArgs, ConfigArgs]
+        Returns list of [OutdirArgs, SysArgs, IndividualArgs, GAArgs, ProblemArgs, OtherArgs, ConfigArgs]
 
     """
     assert issubclass(outdir_args_cls, OutdirArgs)
@@ -133,7 +139,8 @@ def parse_args(outdir_args_cls=OutdirArgs, sys_args_cls=SysArgs, individual_args
     assert issubclass(ga_args_cls, GAArgs)
     assert issubclass(problem_args_cls, ProblemArgs)
     assert issubclass(config_args_cls, ConfigArgs)
+    assert issubclass(other_args_cls, OtherArgs)
 
     parser = transformers.HfArgumentParser((outdir_args_cls, sys_args_cls, individual_args_cls,
-                                            problem_args_cls, ga_args_cls, config_args_cls))
+                                            problem_args_cls, ga_args_cls, other_args_cls, config_args_cls))
     return parser.parse_args_into_dataclasses()

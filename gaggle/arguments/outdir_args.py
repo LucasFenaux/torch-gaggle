@@ -24,6 +24,14 @@ class OutdirArgs:
         "help": "Suffix of each folder (e.g., '00001')"
     })
 
+    save_population: bool = field(default=True, metadata={
+        "help": "whether to save a snapshot of the population at the end of the evolution with its fitness"
+    })
+
+    resume_path: str = field(default=None, metadata={
+        "help": "path to specify when loading pretrained objects/populations"
+    })
+
     def exists(self):
         return self.root is not None
 

@@ -92,3 +92,57 @@ class GAArgs:
         "help": "whether to use freshness to not recompute the fitness of surviving members that have not been modified"
                 "from a generation to the next"
     })
+
+    opt_before_mutation: bool = field(default=False, metadata={
+        "help": "whether to apply the hybrid optimization step before the mutation step of the hybrid ga"
+    })
+
+    clip_grad_norm: float = field(default=None, metadata={
+        "help": "the maximum gradient norm (default None)"
+    })
+
+    opt_chance: float = field(default=0.01, metadata={
+        "help": "probability for any given model in the population to be selected for the optimization step of the "
+                "hybrid ga"
+    })
+
+    opt_protected: bool = field(default=False, metadata={
+        "help": "whether to add protected individuals (elitism) to the selection pool for the optimization step of the "
+                "hybrid ga"
+    })
+
+    criterion: str = field(default="CE", metadata={
+        "choices": ["CE", "BCE"],
+        "help": "loss function for the optimization step of the hybrid ga"
+    })
+
+    optimizer: str = field(default="SGD", metadata={
+        "choices": ["SGG", "Adam"],
+        "help": "optimizer type for the optimization step of the hybrid ga"
+    })
+
+    lr: float = field(default=0.1, metadata={
+        "help": "Only relevant when using a HybridGA. initial learning rate"
+    })
+
+    weight_decay: float = field(default=5e-4, metadata={
+        "help": "Only relevant when using a HybridGA. weight decay (optional). Suggested values:"
+                "- CIFAR10: 5e-4"
+    })
+
+    momentum: float = field(default=0.9, metadata={
+        "help": "Only relevant when using a HybridGA. momentum (optional). Suggested values:"
+                "- CIFAR10: 0.9"
+    })
+
+    lr_scheduler: str = field(default="cosine", metadata={
+        "help": "which scheduler to use for the lr scheduling, if None then uses None"
+    })
+
+    mutation_std_scheduler: str = field(default="cosine", metadata={
+        "help": "which scheduler to use for the mutation scheduling, if None then uses None"
+    })
+
+    hybrid_batch_size: int = field(default=256, metadata={
+        "help": "batch size for hybrid part of training. Only relevant when using a HybridGA."
+    })

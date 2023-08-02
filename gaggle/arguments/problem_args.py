@@ -11,6 +11,11 @@ class ProblemArgs:
         "help": "problem to solve",
     })
 
+    problem_type: str = field(default="classification", metadata={
+        "help": "problem type to solve. Used in the problem lookup table to allow same problem name for different"
+                "kinds of problems",
+    })
+
     batch_size: int = field(default=-1, metadata={
         "help": "batch size for training. Only relevant for classification and other dataset-based problems."
     })

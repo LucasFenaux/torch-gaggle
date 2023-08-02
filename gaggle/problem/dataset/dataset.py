@@ -101,7 +101,6 @@ class Dataset(torch.utils.data.Dataset, ABC):
         """ Internal function to build a default transformation. Override this
         if necessary. """
         transform = transforms.Compose([
-            transforms.ToTensor(),
             # self.normalize_transform
         ])
         return transform
