@@ -9,7 +9,7 @@ from gaggle.arguments.ga_args import GAArgs
 from gaggle.arguments.problem_args import ProblemArgs
 from gaggle.utils.special_print import print_warning
 import transformers
-from gaggle.other_args import OtherArgs
+from gaggle.arguments.other_args import OtherArgs
 
 
 @dataclass

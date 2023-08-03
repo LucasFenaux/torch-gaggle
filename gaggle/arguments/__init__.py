@@ -5,3 +5,4 @@ from .ga_args import GAArgs
 from .individual_args import IndividualArgs
 from .outdir_args import OutdirArgs
 from .problem_args import ProblemArgs
+from .other_args import OtherArgs
