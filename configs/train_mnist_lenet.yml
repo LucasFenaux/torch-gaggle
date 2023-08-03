@@ -16,6 +16,7 @@ ga_args:
   elitism: 0.1
   generations: 1000
   eval_every_generation: 50
+  ga_name: hybrid
 
 sys_args:
   device: cuda

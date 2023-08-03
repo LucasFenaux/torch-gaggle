@@ -2,26 +2,22 @@
 HybridGA code for this project that is to be added to the main gaggle package once enough testing has been performed.
 """
 
-from dataclasses import dataclass, field
 from typing import Callable, List
 
 import torch
 import torch.nn as nn
 
 from gaggle.arguments import GAArgs, SysArgs, IndividualArgs, ProblemArgs
-from gaggle.config_args import ConfigArgs
 from gaggle.arguments.outdir_args import OutdirArgs
-from gaggle.population import NNIndividual, Individual
+from gaggle.population import NNIndividual
 from gaggle.population.population_manager import PopulationManager
 from gaggle.operators import Crossover, Mutation, Selection
-from gaggle.ga import SimpleGA, GAFactory
+from gaggle.ga import SimpleGA
 from gaggle.problem import Problem
 from gaggle.utils import MetricLogger, SmoothedValue
 import time
 from tqdm import tqdm
 import os
-import matplotlib.pyplot as plt
-from gaggle.utils.special_print import print_highlighted, print_dict_highlighted
 
 
 def accuracy(output, target, topk=(1,)):
@@ -76,7 +72,7 @@ def train_one_epoch(model, criterion, optimizer, data_loader, device, model_num,
 class HybridGA(SimpleGA):
     r"""Implements a Hybrid Genetic Algorithm that by default uses Gradient Descent as its additional operator.
     """
-    def __init__(self, population_manager: PopulationManager = None, ga_args: UpdatedGAArgs = None,
+    def __init__(self, population_manager: PopulationManager = None, ga_args: GAArgs = None,
                  selection: Selection = None, crossover: Crossover = None, mutation: Mutation = None,
                  problem_args: ProblemArgs = None, sys_args: SysArgs = None, outdir_args: OutdirArgs = None,
                  individual_args: IndividualArgs = None, problem: Problem = None, criterion: Callable = None,
@@ -160,7 +156,7 @@ class HybridGA(SimpleGA):
         if not self.ga_args.opt_protected:
             protected_list = population_manager.get_protected()
             for protected in protected_list:
-                can_be_optimized = can_be_optimized.remove(protected)
+                can_be_optimized.remove(protected)
 
         # to_optimize = []
         # for ind_id in can_be_optimized:
@@ -236,9 +232,3 @@ class HybridGA(SimpleGA):
               display_test_metrics: bool = True):
         super(HybridGA, self).train(test, callbacks, display_train_metrics, display_test_metrics)
         self.save_population_snapshot()
-
-
-
-
-# register the new GA algorithm
-GAFactory.update("hybrid", HybridGA)
