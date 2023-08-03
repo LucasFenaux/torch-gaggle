@@ -1,6 +1,6 @@
 from typing import Callable
 from gaggle.arguments import GAArgs, SysArgs, OutdirArgs, IndividualArgs, ProblemArgs
-from gaggle.ga import GA, SimpleGA
+from gaggle.ga import GA, SimpleGA, HybridGA
 from gaggle.operators import Selection, Mutation, Crossover
 from gaggle.population import PopulationManager
 from gaggle.problem import Problem
@@ -13,6 +13,7 @@ class GAFactory:
     """
     gas = {
         "simple": SimpleGA,
+        "hybrid": HybridGA
     }
 
     @classmethod
